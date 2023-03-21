@@ -1,9 +1,6 @@
 package com.example.backend_lp3.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,11 +9,21 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cliente extends Pessoa {
+public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String cpf;
+    private String nome;
+
+    @ManyToOne
+    private Departamento departamento;
+    @ManyToOne
+    private Cor cor;
+    @ManyToOne
+    private Tamanho tamanho;
+    @ManyToOne
+    private Genero genero;
+
 }
