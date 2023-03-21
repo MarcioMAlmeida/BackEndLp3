@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Funcionario extends Pessoa {
+public class Gerente extends Pessoa{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
