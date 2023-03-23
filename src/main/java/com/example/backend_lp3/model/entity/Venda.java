@@ -1,9 +1,6 @@
 package com.example.backend_lp3.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,4 +18,12 @@ public class Venda {
     private Long id;
 
     private LocalDateTime dataVenda;
+    private float precoTotal;
+
+    @ManyToOne
+    private Funcionario funcionario;
+    @ManyToOne
+    private Cliente cliente;
+    @ManyToOne
+    private ProdutoEstoque produtoEstoque;
 }

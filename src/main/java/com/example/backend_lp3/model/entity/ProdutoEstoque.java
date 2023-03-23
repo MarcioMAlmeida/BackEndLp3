@@ -9,13 +9,23 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Produto {
+public class ProdutoEstoque {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private int quantidade;
+    private float preco;
 
-    private String nome;
-    private int quantidadeMin;
-    private int quantidadeMax;
+
+    @ManyToOne
+    private Produto produto;
+    @ManyToOne
+    private Departamento departamento;
+    @ManyToOne
+    private Cor cor;
+    @ManyToOne
+    private Tamanho tamanho;
+    @ManyToOne
+    private Genero genero;
 }
