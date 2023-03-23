@@ -18,7 +18,7 @@ public class PedidoDTO {
 
     private LocalDateTime dataPedido;
     private LocalDateTime dataEntrega;
-    private float preco;
+    private float precoTotal;
     private Fornecedor fornecedor;
     private Gerente gerente;
     private ProdutoEstoque produtoEstoque;

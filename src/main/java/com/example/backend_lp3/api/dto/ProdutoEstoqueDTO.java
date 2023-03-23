@@ -13,7 +13,7 @@ public class ProdutoEstoqueDTO {
 
     private Long id;
     private int quantidade;
-    private float preco;
+    private float precoUnitario;
     private Produto produto;
     private Departamento departamento;
     private Cor cor;

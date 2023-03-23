@@ -1,9 +1,6 @@
 package com.example.backend_lp3.api.dto;
 
-import com.example.backend_lp3.model.entity.Cliente;
-import com.example.backend_lp3.model.entity.Funcionario;
-import com.example.backend_lp3.model.entity.ProdutoEstoque;
-import com.example.backend_lp3.model.entity.Venda;
+import com.example.backend_lp3.model.entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +19,7 @@ public class VendaDTO {
     private Funcionario funcionario;
     private Cliente cliente;
     private ProdutoEstoque produtoEstoque;
+    private MetodoPagamento metodoPagamento;
 
     public static VendaDTO create(Venda venda) {
         ModelMapper modelMapper = new ModelMapper();

@@ -19,7 +19,7 @@ public class Pedido {
 
     private LocalDateTime dataPedido;
     private LocalDateTime dataEntrega;
-    private float preco;
+    private float precoTotal;
 
     @ManyToOne
     private Fornecedor fornecedor;

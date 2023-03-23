@@ -26,4 +26,6 @@ public class Venda {
     private Cliente cliente;
     @ManyToOne
     private ProdutoEstoque produtoEstoque;
+    @ManyToOne
+    private MetodoPagamento metodoPagamento;
 }
