@@ -19,7 +19,7 @@ public class GerenteService {
         this.repository = repository;
     }
 
-    public List<Gerente> getGerente(){
+    public List<Gerente> getGerentes(){
         return  repository.findAll();
     }
 

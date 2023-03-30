@@ -19,7 +19,7 @@ public class GeneroService {
         this.repository = repository;
     }
 
-    public List<Genero> getGenero(){
+    public List<Genero> getGeneros(){
         return  repository.findAll();
     }
 

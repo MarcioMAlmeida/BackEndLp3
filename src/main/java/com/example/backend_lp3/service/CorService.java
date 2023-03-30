@@ -21,7 +21,7 @@ public class CorService {
         this.repository = repository;
     }
 
-    public List<Cor> getCor(){
+    public List<Cor> getCores(){
         return  repository.findAll();
     }
 

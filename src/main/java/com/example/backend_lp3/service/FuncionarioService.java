@@ -19,7 +19,7 @@ public class FuncionarioService {
         this.repository = repository;
     }
 
-    public List<Funcionario> getFuncionario(){
+    public List<Funcionario> getFuncionarios(){
         return  repository.findAll();
     }
 

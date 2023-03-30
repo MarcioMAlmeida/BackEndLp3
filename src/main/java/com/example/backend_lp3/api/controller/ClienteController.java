@@ -3,7 +3,9 @@ package com.example.backend_lp3.api.controller;
 import com.example.backend_lp3.api.dto.ClienteDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.Cliente;
+import com.example.backend_lp3.model.entity.Endereco;
 import com.example.backend_lp3.service.ClienteService;
+import com.example.backend_lp3.service.EnderecoService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class ClienteController {
 
     private final ClienteService service;
+    private final EnderecoService enderecoService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -85,13 +88,6 @@ public class ClienteController {
         Cliente cliente = modelMapper.map(dto, Cliente.class);
         Endereco endereco = modelMapper.map(dto, Endereco.class);
         cliente.setEndereco(endereco);
-        if (dto.getIdCurso() != null) {
-            Optional<Curso> curso = cursoService.getCursoById(dto.getIdCurso());
-            if (!curso.isPresent()) {
-                cliente.setCurso(null);
-            } else {
-                cliente.setCurso(curso.get());
-            }
-        }
         return cliente;
+    }
 }

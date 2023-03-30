@@ -19,7 +19,7 @@ public class FornecedorService {
         this.repository = repository;
     }
 
-    public List<Fornecedor> getFornecedor(){
+    public List<Fornecedor> getFornecedores(){
         return  repository.findAll();
     }
 

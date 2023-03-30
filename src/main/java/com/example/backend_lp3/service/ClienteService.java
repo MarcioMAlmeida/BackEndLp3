@@ -19,7 +19,7 @@ public class ClienteService {
         this.repository = repository;
     }
 
-    public List<Cliente> getCliente(){
+    public List<Cliente> getClientes(){
         return  repository.findAll();
     }
 

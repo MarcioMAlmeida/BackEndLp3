@@ -19,7 +19,7 @@ public class ProdutoService {
         this.repository = repository;
     }
 
-    public List<Produto> getProduto(){
+    public List<Produto> getProdutos(){
         return  repository.findAll();
     }
 

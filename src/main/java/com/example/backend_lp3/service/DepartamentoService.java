@@ -20,7 +20,7 @@ public class DepartamentoService {
         this.repository = repository;
     }
 
-    public List<Departamento> getDepartamento(){
+    public List<Departamento> getDepartamentos(){
         return  repository.findAll();
     }
 

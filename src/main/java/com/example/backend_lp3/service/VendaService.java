@@ -19,7 +19,7 @@ public class VendaService {
         this.repository = repository;
     }
 
-    public List<Venda> getVenda(){
+    public List<Venda> getVendas(){
         return  repository.findAll();
     }
 

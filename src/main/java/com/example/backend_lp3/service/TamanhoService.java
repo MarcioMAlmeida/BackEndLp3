@@ -19,7 +19,7 @@ public class TamanhoService {
         this.repository = repository;
     }
 
-    public List<Tamanho> getTamanho(){
+    public List<Tamanho> getTamanhos(){
         return  repository.findAll();
     }
 

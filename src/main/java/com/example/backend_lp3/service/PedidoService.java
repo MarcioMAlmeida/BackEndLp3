@@ -19,7 +19,7 @@ public class PedidoService {
         this.repository = repository;
     }
 
-    public List<Pedido> getPedido(){
+    public List<Pedido> getPedidos(){
         return  repository.findAll();
     }
 
