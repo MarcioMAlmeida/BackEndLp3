@@ -15,15 +15,25 @@ public class ClienteDTO {
     private String nome;
     private String telefone;
     private String email;
-    private String cep;
-    private String estado;
-    private String cidade;
+    private String cpf;
     private String logradouro;
-    private String numero;
+    private Integer numero;
     private String complemento;
+    private String bairro;
+    private String cidade;
+    private String uf;
+    private String cep;
 
-    public static ClienteDTO create(Cliente cliente) {
+    public static ClienteDTO create(Cliente aluno) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(cliente, ClienteDTO.class);
+        ClienteDTO dto = modelMapper.map(aluno, ClienteDTO.class);
+        dto.logradouro = aluno.getEndereco().getLogradouro();
+        dto.numero = aluno.getEndereco().getNumero();
+        dto.complemento = aluno.getEndereco().getComplemento();
+        dto.bairro = aluno.getEndereco().getBairro();
+        dto.cidade = aluno.getEndereco().getCidade();
+        dto.uf = aluno.getEndereco().getUf();
+        dto.cep = aluno.getEndereco().getCep();
+        return dto;
     }
 }
