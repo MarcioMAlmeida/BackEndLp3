@@ -14,8 +14,8 @@ public class DepartamentoDTO {
     private Long id;
     private String nome;
 
-    public static DepartamentoDTO create(Departamento metodoPagamento) {
+    public static DepartamentoDTO create(Departamento departamento) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(metodoPagamento, DepartamentoDTO.class);
+        return modelMapper.map(departamento, DepartamentoDTO.class);
     }
 }
