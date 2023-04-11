@@ -19,7 +19,7 @@ public class MetodoPagamentoService {
         this.repository = repository;
     }
 
-    public List<MetodoPagamento> getMetodoPagamentos(){
+    public List<MetodoPagamento> getMetodosPagamento(){
         return  repository.findAll();
     }
 

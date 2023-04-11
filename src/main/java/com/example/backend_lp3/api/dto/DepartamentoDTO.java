@@ -1,6 +1,6 @@
 package com.example.backend_lp3.api.dto;
 
-import com.example.backend_lp3.model.entity.MetodoPagamento;
+import com.example.backend_lp3.model.entity.Departamento;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +14,8 @@ public class DepartamentoDTO {
     private Long id;
     private String nome;
 
-    public static MetodoPagamentoDTO create(MetodoPagamento metodoPagamento) {
+    public static DepartamentoDTO create(Departamento metodoPagamento) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(metodoPagamento, MetodoPagamentoDTO.class);
+        return modelMapper.map(metodoPagamento, DepartamentoDTO.class);
     }
 }
