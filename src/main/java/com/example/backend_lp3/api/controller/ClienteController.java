@@ -33,7 +33,7 @@ public class ClienteController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Cliente> cliente = service.getClienteById(id);
-        if (!cliente.isPresent()) {
+        if (cliente.isEmpty()) {
             return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(cliente.map(ClienteDTO::create));

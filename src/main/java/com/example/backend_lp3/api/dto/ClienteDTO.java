@@ -24,16 +24,16 @@ public class ClienteDTO {
     private String uf;
     private String cep;
 
-    public static ClienteDTO create(Cliente aluno) {
+    public static ClienteDTO create(Cliente cliente) {
         ModelMapper modelMapper = new ModelMapper();
-        ClienteDTO dto = modelMapper.map(aluno, ClienteDTO.class);
-        dto.logradouro = aluno.getEndereco().getLogradouro();
-        dto.numero = aluno.getEndereco().getNumero();
-        dto.complemento = aluno.getEndereco().getComplemento();
-        dto.bairro = aluno.getEndereco().getBairro();
-        dto.cidade = aluno.getEndereco().getCidade();
-        dto.uf = aluno.getEndereco().getUf();
-        dto.cep = aluno.getEndereco().getCep();
+        ClienteDTO dto = modelMapper.map(cliente, ClienteDTO.class);
+        dto.logradouro = cliente.getEndereco().getLogradouro();
+        dto.numero = cliente.getEndereco().getNumero();
+        dto.complemento = cliente.getEndereco().getComplemento();
+        dto.bairro = cliente.getEndereco().getBairro();
+        dto.cidade = cliente.getEndereco().getCidade();
+        dto.uf = cliente.getEndereco().getUf();
+        dto.cep = cliente.getEndereco().getCep();
         return dto;
     }
 }
