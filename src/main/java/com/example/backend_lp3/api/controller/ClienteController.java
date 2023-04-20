@@ -40,7 +40,7 @@ public class ClienteController {
     }
 
     @PostMapping()
-    public ResponseEntity post(ClienteDTO dto) {
+    public ResponseEntity post(@RequestBody ClienteDTO dto) {
         try {
             Cliente cliente = converter(dto);
             Endereco endereco = enderecoService.salvar(cliente.getEndereco());

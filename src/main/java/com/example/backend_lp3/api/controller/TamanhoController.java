@@ -2,10 +2,14 @@ package com.example.backend_lp3.api.controller;
 
 import com.example.backend_lp3.api.dto.TamanhoDTO;
 import com.example.backend_lp3.api.dto.TamanhoDTO;
+import com.example.backend_lp3.api.dto.TamanhoDTO;
+import com.example.backend_lp3.exception.RegraNegocioException;
+import com.example.backend_lp3.model.entity.Tamanho;
 import com.example.backend_lp3.model.entity.Tamanho;
 import com.example.backend_lp3.model.entity.Tamanho;
 import com.example.backend_lp3.service.TamanhoService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +38,21 @@ public class TamanhoController {
             return new ResponseEntity("Tamanho não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(tamanho.map(TamanhoDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody TamanhoDTO dto) {
+        try {
+            Tamanho tamanho = converter(dto);
+            tamanho = service.salvar(tamanho);
+            return new ResponseEntity(tamanho, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Tamanho converter(TamanhoDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(dto, Tamanho.class);
     }
 }

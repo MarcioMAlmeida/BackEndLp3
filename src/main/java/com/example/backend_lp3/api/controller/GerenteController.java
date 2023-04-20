@@ -2,10 +2,16 @@ package com.example.backend_lp3.api.controller;
 
 import com.example.backend_lp3.api.dto.GerenteDTO;
 import com.example.backend_lp3.api.dto.GerenteDTO;
+import com.example.backend_lp3.api.dto.GerenteDTO;
+import com.example.backend_lp3.exception.RegraNegocioException;
+import com.example.backend_lp3.model.entity.Endereco;
 import com.example.backend_lp3.model.entity.Gerente;
 import com.example.backend_lp3.model.entity.Gerente;
+import com.example.backend_lp3.model.entity.Gerente;
+import com.example.backend_lp3.service.EnderecoService;
 import com.example.backend_lp3.service.GerenteService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +26,7 @@ import java.util.stream.Collectors;
 public class GerenteController {
 
     private final GerenteService service;
+    private final EnderecoService enderecoService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -34,5 +41,26 @@ public class GerenteController {
             return new ResponseEntity("Gerente não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(gerente.map(GerenteDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody GerenteDTO dto) {
+        try {
+            Gerente gerente = converter(dto);
+            Endereco endereco = enderecoService.salvar(gerente.getEndereco());
+            gerente.setEndereco(endereco);
+            gerente = service.salvar(gerente);
+            return new ResponseEntity(gerente, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Gerente converter(GerenteDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Gerente gerente = modelMapper.map(dto, Gerente.class);
+        Endereco endereco = modelMapper.map(dto, Endereco.class);
+        gerente.setEndereco(endereco);
+        return gerente;
     }
 }

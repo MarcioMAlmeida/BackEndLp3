@@ -2,10 +2,14 @@ package com.example.backend_lp3.api.controller;
 
 import com.example.backend_lp3.api.dto.DepartamentoDTO;
 import com.example.backend_lp3.api.dto.DepartamentoDTO;
+import com.example.backend_lp3.api.dto.DepartamentoDTO;
+import com.example.backend_lp3.exception.RegraNegocioException;
+import com.example.backend_lp3.model.entity.Departamento;
 import com.example.backend_lp3.model.entity.Departamento;
 import com.example.backend_lp3.model.entity.Departamento;
 import com.example.backend_lp3.service.DepartamentoService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +38,21 @@ public class DepartamentoController {
             return new ResponseEntity("Departamento não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(departamento.map(DepartamentoDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody DepartamentoDTO dto) {
+        try {
+            Departamento departamento = converter(dto);
+            departamento = service.salvar(departamento);
+            return new ResponseEntity(departamento, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Departamento converter(DepartamentoDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(dto, Departamento.class);
     }
 }
