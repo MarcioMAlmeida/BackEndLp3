@@ -3,8 +3,9 @@ package com.example.backend_lp3.service;
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.MetodoPagamento;
 import com.example.backend_lp3.model.repository.MetodoPagamentoRepository;
-import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;

@@ -2,8 +2,9 @@ package com.example.backend_lp3.service;
 
 import com.example.backend_lp3.model.entity.Endereco;
 import com.example.backend_lp3.model.repository.EnderecoRepository;
-import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

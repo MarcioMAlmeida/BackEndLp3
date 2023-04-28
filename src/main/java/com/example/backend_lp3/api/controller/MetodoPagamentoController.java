@@ -1,11 +1,7 @@
 package com.example.backend_lp3.api.controller;
 
 import com.example.backend_lp3.api.dto.MetodoPagamentoDTO;
-import com.example.backend_lp3.api.dto.MetodoPagamentoDTO;
-import com.example.backend_lp3.api.dto.MetodoPagamentoDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
-import com.example.backend_lp3.model.entity.MetodoPagamento;
-import com.example.backend_lp3.model.entity.MetodoPagamento;
 import com.example.backend_lp3.model.entity.MetodoPagamento;
 import com.example.backend_lp3.service.MetodoPagamentoService;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +42,35 @@ public class MetodoPagamentoController {
             MetodoPagamento metodoPagamento = converter(dto);
             metodoPagamento = service.salvar(metodoPagamento);
             return new ResponseEntity(metodoPagamento, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, MetodoPagamentoDTO dto) {
+        if (!service.getMetodoPagamentoById(id).isPresent()) {
+            return new ResponseEntity("Metodo de pagamento não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            MetodoPagamento metodoPagamento = converter(dto);
+            metodoPagamento.setId(id);
+            service.salvar(metodoPagamento);
+            return ResponseEntity.ok(metodoPagamento);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<MetodoPagamento> metodoPagamento = service.getMetodoPagamentoById(id);
+        if(!metodoPagamento.isPresent()) {
+            return new ResponseEntity("Metodo de pagamento não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(metodoPagamento.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

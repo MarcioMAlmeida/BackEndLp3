@@ -1,11 +1,7 @@
 package com.example.backend_lp3.api.controller;
 
 import com.example.backend_lp3.api.dto.TamanhoDTO;
-import com.example.backend_lp3.api.dto.TamanhoDTO;
-import com.example.backend_lp3.api.dto.TamanhoDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
-import com.example.backend_lp3.model.entity.Tamanho;
-import com.example.backend_lp3.model.entity.Tamanho;
 import com.example.backend_lp3.model.entity.Tamanho;
 import com.example.backend_lp3.service.TamanhoService;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +42,35 @@ public class TamanhoController {
             Tamanho tamanho = converter(dto);
             tamanho = service.salvar(tamanho);
             return new ResponseEntity(tamanho, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, TamanhoDTO dto) {
+        if (!service.getTamanhoById(id).isPresent()) {
+            return new ResponseEntity("Tamanho não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Tamanho tamanho = converter(dto);
+            tamanho.setId(id);
+            service.salvar(tamanho);
+            return ResponseEntity.ok(tamanho);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Tamanho> tamanho = service.getTamanhoById(id);
+        if(!tamanho.isPresent()) {
+            return new ResponseEntity("Tamanho não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(tamanho.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

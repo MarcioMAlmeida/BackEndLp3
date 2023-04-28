@@ -47,6 +47,35 @@ public class CorController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, CorDTO dto) {
+        if (!service.getCorById(id).isPresent()) {
+            return new ResponseEntity("Cor não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Cor cor = converter(dto);
+            cor.setId(id);
+            service.salvar(cor);
+            return ResponseEntity.ok(cor);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Cor> cor = service.getCorById(id);
+        if(!cor.isPresent()) {
+            return new ResponseEntity("Cor não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(cor.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Cor converter(CorDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(dto, Cor.class);

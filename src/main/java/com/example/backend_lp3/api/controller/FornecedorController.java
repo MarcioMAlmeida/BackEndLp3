@@ -1,12 +1,8 @@
 package com.example.backend_lp3.api.controller;
 
 import com.example.backend_lp3.api.dto.FornecedorDTO;
-import com.example.backend_lp3.api.dto.FornecedorDTO;
-import com.example.backend_lp3.api.dto.FornecedorDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
-import com.example.backend_lp3.model.entity.Fornecedor;
 import com.example.backend_lp3.model.entity.Endereco;
-import com.example.backend_lp3.model.entity.Fornecedor;
 import com.example.backend_lp3.model.entity.Fornecedor;
 import com.example.backend_lp3.service.EnderecoService;
 import com.example.backend_lp3.service.FornecedorService;
@@ -51,6 +47,37 @@ public class FornecedorController {
             fornecedor.setEndereco(endereco);
             fornecedor = service.salvar(fornecedor);
             return new ResponseEntity(fornecedor, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, FornecedorDTO dto) {
+        if (!service.getFornecedorById(id).isPresent()) {
+            return new ResponseEntity("Fornecedor não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Fornecedor fornecedor = converter(dto);
+            fornecedor.setId(id);
+            Endereco endereco = enderecoService.salvar(fornecedor.getEndereco());
+            fornecedor.setEndereco(endereco);
+            service.salvar(fornecedor);
+            return ResponseEntity.ok(fornecedor);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Fornecedor> fornecedor = service.getFornecedorById(id);
+        if(!fornecedor.isPresent()) {
+            return new ResponseEntity("Fornecedor não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(fornecedor.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

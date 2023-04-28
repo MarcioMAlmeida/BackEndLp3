@@ -1,12 +1,8 @@
 package com.example.backend_lp3.api.controller;
 
 import com.example.backend_lp3.api.dto.GerenteDTO;
-import com.example.backend_lp3.api.dto.GerenteDTO;
-import com.example.backend_lp3.api.dto.GerenteDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.Endereco;
-import com.example.backend_lp3.model.entity.Gerente;
-import com.example.backend_lp3.model.entity.Gerente;
 import com.example.backend_lp3.model.entity.Gerente;
 import com.example.backend_lp3.service.EnderecoService;
 import com.example.backend_lp3.service.GerenteService;
@@ -51,6 +47,37 @@ public class GerenteController {
             gerente.setEndereco(endereco);
             gerente = service.salvar(gerente);
             return new ResponseEntity(gerente, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, GerenteDTO dto) {
+        if (!service.getGerenteById(id).isPresent()) {
+            return new ResponseEntity("Gerente não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Gerente gerente = converter(dto);
+            gerente.setId(id);
+            Endereco endereco = enderecoService.salvar(gerente.getEndereco());
+            gerente.setEndereco(endereco);
+            service.salvar(gerente);
+            return ResponseEntity.ok(gerente);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Gerente> gerente = service.getGerenteById(id);
+        if(!gerente.isPresent()) {
+            return new ResponseEntity("Gerente não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(gerente.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
