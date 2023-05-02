@@ -1,6 +1,5 @@
 package com.example.backend_lp3.service;
 
-import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.ProdutoEstoque;
 import com.example.backend_lp3.model.repository.ProdutoEstoqueRepository;
 
