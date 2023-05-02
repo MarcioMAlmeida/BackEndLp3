@@ -5,6 +5,9 @@ import com.example.backend_lp3.api.dto.ProdutoEstoqueDTO;
 import com.example.backend_lp3.model.entity.ProdutoEstoque;
 import com.example.backend_lp3.model.entity.ProdutoEstoque;
 import com.example.backend_lp3.service.ProdutoEstoqueService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +25,22 @@ public class ProdutoEstoqueController {
     private final ProdutoEstoqueService service;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os Produtos do estoque")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Produto encontrado"),
+            @ApiResponse(code = 404, message = "Produto não encontrado")
+    })
     public ResponseEntity get() {
         List<ProdutoEstoque> produtosEstoque = service.getProdutosEstoque();
         return ResponseEntity.ok(produtosEstoque.stream().map(ProdutoEstoqueDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de Produto específico no estoque")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Produto encontrado"),
+            @ApiResponse(code = 404, message = "Produto não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ProdutoEstoque> produtoEstoque = service.getProdutoEstoqueById(id);
         if (!produtoEstoque.isPresent()) {
