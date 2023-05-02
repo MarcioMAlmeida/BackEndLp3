@@ -4,6 +4,9 @@ import com.example.backend_lp3.api.dto.CorDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.Cor;
 import com.example.backend_lp3.service.CorService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,11 @@ public class CorController {
     private final CorService service;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os Clientes")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Clientes encontrados"),
+            @ApiResponse(code = 404, message = "Clientes não encontrados")
+    })
     public ResponseEntity get() {
         List<Cor> cores = service.getCores();
         return ResponseEntity.ok(cores.stream().map(CorDTO::create).collect(Collectors.toList()));
