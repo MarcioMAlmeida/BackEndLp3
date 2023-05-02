@@ -28,7 +28,7 @@ public class ClienteController {
     private final EnderecoService enderecoService;
 
     @GetMapping()
-    @ApiOperation("Obter detalhes de todos os Clientes")
+    @ApiOperation("Obter detalhes de todos os clientes")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Clientes encontrados"),
             @ApiResponse(code = 404, message = "Clientes não encontrados")

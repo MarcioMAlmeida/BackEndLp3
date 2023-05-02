@@ -6,6 +6,9 @@ import com.example.backend_lp3.model.entity.Endereco;
 import com.example.backend_lp3.model.entity.Fornecedor;
 import com.example.backend_lp3.service.EnderecoService;
 import com.example.backend_lp3.service.FornecedorService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -25,12 +28,22 @@ public class FornecedorController {
     private final EnderecoService enderecoService;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os Fornecedors")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Fornecedors encontrados"),
+            @ApiResponse(code = 404, message = "Fornecedors não encontrados")
+    })
     public ResponseEntity get() {
         List<Fornecedor> fornecedores = service.getFornecedores();
         return ResponseEntity.ok(fornecedores.stream().map(FornecedorDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um fornecedor específico")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Fornecedor encontrado"),
+            @ApiResponse(code = 404, message = "Fornecedor não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Fornecedor> fornecedor = service.getFornecedorById(id);
         if (!fornecedor.isPresent()) {
@@ -40,6 +53,11 @@ public class FornecedorController {
     }
 
     @PostMapping()
+    @ApiOperation("Salvar novo fornecedor")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Fornecedor encontrado"),
+            @ApiResponse(code = 404, message = "Fornecedor não encontrado")
+    })
     public ResponseEntity post(@RequestBody FornecedorDTO dto) {
         try {
             Fornecedor fornecedor = converter(dto);
@@ -53,6 +71,11 @@ public class FornecedorController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Alterar dados de um fornecedor")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Fornecedor encontrado"),
+            @ApiResponse(code = 404, message = "Fornecedor não encontrado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, FornecedorDTO dto) {
         if (!service.getFornecedorById(id).isPresent()) {
             return new ResponseEntity("Fornecedor não encontrado", HttpStatus.NOT_FOUND);
@@ -70,6 +93,11 @@ public class FornecedorController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deletar um fornecedor")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Fornecedor encontrado"),
+            @ApiResponse(code = 404, message = "Fornecedor não encontrado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Fornecedor> fornecedor = service.getFornecedorById(id);
         if(!fornecedor.isPresent()) {

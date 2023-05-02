@@ -6,6 +6,9 @@ import com.example.backend_lp3.model.entity.Endereco;
 import com.example.backend_lp3.model.entity.Gerente;
 import com.example.backend_lp3.service.EnderecoService;
 import com.example.backend_lp3.service.GerenteService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -25,12 +28,22 @@ public class GerenteController {
     private final EnderecoService enderecoService;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os gerentes")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Gerentes encontrados"),
+            @ApiResponse(code = 404, message = "Gerentes não encontrados")
+    })
     public ResponseEntity get() {
         List<Gerente> gerentes = service.getGerentes();
         return ResponseEntity.ok(gerentes.stream().map(GerenteDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um gerente específico")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Gerente encontrado"),
+            @ApiResponse(code = 404, message = "Gerente não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Gerente> gerente = service.getGerenteById(id);
         if (!gerente.isPresent()) {
@@ -40,6 +53,11 @@ public class GerenteController {
     }
 
     @PostMapping()
+    @ApiOperation("Salvar novo gerente")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Gerente encontrado"),
+            @ApiResponse(code = 404, message = "Gerente não encontrado")
+    })
     public ResponseEntity post(@RequestBody GerenteDTO dto) {
         try {
             Gerente gerente = converter(dto);
@@ -53,6 +71,11 @@ public class GerenteController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Alterar dados de um gerente")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Gerente encontrado"),
+            @ApiResponse(code = 404, message = "Gerente não encontrado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, GerenteDTO dto) {
         if (!service.getGerenteById(id).isPresent()) {
             return new ResponseEntity("Gerente não encontrado", HttpStatus.NOT_FOUND);
@@ -70,6 +93,11 @@ public class GerenteController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deletar um gerente")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Gerente encontrado"),
+            @ApiResponse(code = 404, message = "Gerente não encontrado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Gerente> gerente = service.getGerenteById(id);
         if(!gerente.isPresent()) {
