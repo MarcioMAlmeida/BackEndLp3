@@ -30,8 +30,8 @@ public class ClienteController {
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os Clientes")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Cliente encontrado"),
-            @ApiResponse(code = 404, message = "Cliente não encontrado")
+            @ApiResponse(code = 200, message = "Clientes encontrados"),
+            @ApiResponse(code = 404, message = "Clientes não encontrados")
     })
     public ResponseEntity get() {
         List<Cliente> clientes = service.getClientes();
@@ -39,6 +39,11 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um cliente específico")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cliente encontrado"),
+            @ApiResponse(code = 404, message = "Cliente não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Cliente> cliente = service.getClienteById(id);
         if (cliente.isEmpty()) {
@@ -48,6 +53,11 @@ public class ClienteController {
     }
 
     @PostMapping()
+    @ApiOperation("Salvar novo cliente")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cliente encontrado"),
+            @ApiResponse(code = 404, message = "Cliente não encontrado")
+    })
     public ResponseEntity post(@RequestBody ClienteDTO dto) {
         try {
             Cliente cliente = converter(dto);
@@ -61,6 +71,11 @@ public class ClienteController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Alterar dados de um cliente")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cliente encontrado"),
+            @ApiResponse(code = 404, message = "Cliente não encontrado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, ClienteDTO dto) {
         if (!service.getClienteById(id).isPresent()) {
             return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
@@ -78,6 +93,11 @@ public class ClienteController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deletar um cliente")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cliente encontrado"),
+            @ApiResponse(code = 404, message = "Cliente não encontrado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Cliente> cliente = service.getClienteById(id);
         if(!cliente.isPresent()) {
