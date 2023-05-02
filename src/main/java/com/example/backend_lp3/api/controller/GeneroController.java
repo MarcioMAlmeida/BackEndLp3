@@ -4,6 +4,9 @@ import com.example.backend_lp3.api.dto.GeneroDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.Genero;
 import com.example.backend_lp3.service.GeneroService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -22,21 +25,36 @@ public class GeneroController {
     private final GeneroService service;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os gêneros")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Gênero encontrado"),
+            @ApiResponse(code = 404, message = "Gênero não encontrado")
+    })
     public ResponseEntity get() {
         List<Genero> generos = service.getGeneros();
         return ResponseEntity.ok(generos.stream().map(GeneroDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um Gênero específico")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Gênero encontrada"),
+            @ApiResponse(code = 404, message = "Gênero não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Genero> genero = service.getGeneroById(id);
         if (!genero.isPresent()) {
-            return new ResponseEntity("Genero não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Gênero não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(genero.map(GeneroDTO::create));
     }
 
     @PostMapping()
+    @ApiOperation("Salvar novo Gênero")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Gênero encontrada"),
+            @ApiResponse(code = 404, message = "Gênero não encontrada")
+    })
     public ResponseEntity post(@RequestBody GeneroDTO dto) {
         try {
             Genero genero = converter(dto);
@@ -48,6 +66,11 @@ public class GeneroController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Alterar dados de um Gênero")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Gênero encontrado"),
+            @ApiResponse(code = 404, message = "Gênero não encontrado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, GeneroDTO dto) {
         if (!service.getGeneroById(id).isPresent()) {
             return new ResponseEntity("Genero não encontrado", HttpStatus.NOT_FOUND);
@@ -63,6 +86,11 @@ public class GeneroController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deletar um Gênero")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Gênero encontrado"),
+            @ApiResponse(code = 404, message = "Gênero não encontrado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Genero> genero = service.getGeneroById(id);
         if(!genero.isPresent()) {

@@ -4,6 +4,9 @@ import com.example.backend_lp3.api.dto.TamanhoDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.Tamanho;
 import com.example.backend_lp3.service.TamanhoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -22,12 +25,22 @@ public class TamanhoController {
     private final TamanhoService service;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os Tamanhos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Tamanho encontrado"),
+            @ApiResponse(code = 404, message = "Tamanho não encontrado")
+    })
     public ResponseEntity get() {
         List<Tamanho> tamanhos = service.getTamanhos();
         return ResponseEntity.ok(tamanhos.stream().map(TamanhoDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um Tamanho específico")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Tamanho encontrado"),
+            @ApiResponse(code = 404, message = "Tamanho não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Tamanho> tamanho = service.getTamanhoById(id);
         if (!tamanho.isPresent()) {
@@ -37,6 +50,11 @@ public class TamanhoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salvar novo Tamanho")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Tamanho encontrado"),
+            @ApiResponse(code = 404, message = "Tamanho não encontrado")
+    })
     public ResponseEntity post(@RequestBody TamanhoDTO dto) {
         try {
             Tamanho tamanho = converter(dto);
@@ -48,6 +66,11 @@ public class TamanhoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Alterar dados de um Tamanho")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Tamanho encontrado"),
+            @ApiResponse(code = 404, message = "Tamanho não encontrado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, TamanhoDTO dto) {
         if (!service.getTamanhoById(id).isPresent()) {
             return new ResponseEntity("Tamanho não encontrado", HttpStatus.NOT_FOUND);
@@ -63,6 +86,11 @@ public class TamanhoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deletar um Tamanho")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Tamanho encontrado"),
+            @ApiResponse(code = 404, message = "Tamanho não encontrado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Tamanho> tamanho = service.getTamanhoById(id);
         if(!tamanho.isPresent()) {

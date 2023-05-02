@@ -4,6 +4,9 @@ import com.example.backend_lp3.api.dto.DepartamentoDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.Departamento;
 import com.example.backend_lp3.service.DepartamentoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -22,12 +25,22 @@ public class DepartamentoController {
     private final DepartamentoService service;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os Departamentos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Departamento encontrado"),
+            @ApiResponse(code = 404, message = "Departamento não encontrado")
+    })
     public ResponseEntity get() {
         List<Departamento> departamentos = service.getDepartamentos();
         return ResponseEntity.ok(departamentos.stream().map(DepartamentoDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de Departamento específico")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Departamento encontrado"),
+            @ApiResponse(code = 404, message = "Departamento não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Departamento> departamento = service.getDepartamentoById(id);
         if (!departamento.isPresent()) {
@@ -37,6 +50,11 @@ public class DepartamentoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salvar novo Departamento")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Departamento encontrado"),
+            @ApiResponse(code = 404, message = "Departamento não encontrado")
+    })
     public ResponseEntity post(@RequestBody DepartamentoDTO dto) {
         try {
             Departamento departamento = converter(dto);
@@ -48,6 +66,11 @@ public class DepartamentoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Alterar dados de um Departamento")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Departamento encontrado"),
+            @ApiResponse(code = 404, message = "Departamento não encontrado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, DepartamentoDTO dto) {
         if (!service.getDepartamentoById(id).isPresent()) {
             return new ResponseEntity("Departamento não encontrado", HttpStatus.NOT_FOUND);
@@ -63,6 +86,11 @@ public class DepartamentoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deletar um Departamento")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Departamento encontrado"),
+            @ApiResponse(code = 404, message = "Departamento não encontrado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Departamento> departamento = service.getDepartamentoById(id);
         if(!departamento.isPresent()) {

@@ -25,10 +25,10 @@ public class CorController {
     private final CorService service;
 
     @GetMapping()
-    @ApiOperation("Obter detalhes de todos os Clientes")
+    @ApiOperation("Obter detalhes de todas as Cores")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Clientes encontrados"),
-            @ApiResponse(code = 404, message = "Clientes não encontrados")
+            @ApiResponse(code = 200, message = "Cor encontrada"),
+            @ApiResponse(code = 404, message = "Cor não encontrada")
     })
     public ResponseEntity get() {
         List<Cor> cores = service.getCores();
@@ -36,15 +36,26 @@ public class CorController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de Cor específica")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cor encontrada"),
+            @ApiResponse(code = 404, message = "Cor não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Cor> cor = service.getCorById(id);
         if (!cor.isPresent()) {
+
             return new ResponseEntity("Cor não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(cor.map(CorDTO::create));
     }
 
     @PostMapping()
+    @ApiOperation("Salvar nova cor")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cor encontrada"),
+            @ApiResponse(code = 404, message = "Cor não encontrada")
+    })
     public ResponseEntity post(@RequestBody CorDTO dto) {
         try {
             Cor cor = converter(dto);
@@ -56,6 +67,11 @@ public class CorController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Alterar dados de uma Cor")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cor encontrada"),
+            @ApiResponse(code = 404, message = "Cor não encontrada")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, CorDTO dto) {
         if (!service.getCorById(id).isPresent()) {
             return new ResponseEntity("Cor não encontrada", HttpStatus.NOT_FOUND);
@@ -71,6 +87,11 @@ public class CorController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deletar uma cor")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cor encontrada"),
+            @ApiResponse(code = 404, message = "Cor não encontrada")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Cor> cor = service.getCorById(id);
         if(!cor.isPresent()) {
