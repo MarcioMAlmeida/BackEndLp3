@@ -1,7 +1,6 @@
 package com.example.backend_lp3.api.dto;
 
 import com.example.backend_lp3.model.entity.*;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
