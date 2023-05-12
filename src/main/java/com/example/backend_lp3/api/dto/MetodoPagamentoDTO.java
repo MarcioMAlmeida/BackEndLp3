@@ -13,7 +13,7 @@ import org.modelmapper.ModelMapper;
 public class MetodoPagamentoDTO {
 
     private Long id;
-    private String nome;
+    private String nomeMetodoPagamento;
 
     public static MetodoPagamentoDTO create(MetodoPagamento metodoPagamento) {
         ModelMapper modelMapper = new ModelMapper();

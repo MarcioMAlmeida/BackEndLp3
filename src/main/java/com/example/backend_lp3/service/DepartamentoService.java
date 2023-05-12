@@ -3,7 +3,6 @@ package com.example.backend_lp3.service;
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.Departamento;
 import com.example.backend_lp3.model.repository.DepartamentoRepository;
-import com.example.backend_lp3.model.repository.DepartamentoRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,8 +41,8 @@ public class DepartamentoService {
     }
 
     public void validar(Departamento departamento) {
-        if (departamento.getNome() == null || departamento.getNome().trim().equals("")) {
-            throw new RegraNegocioException("Nome inválido!");
+        if (departamento.getNomeDepartamento() == null || departamento.getNomeDepartamento().trim().equals("")) {
+            throw new RegraNegocioException("Departamento inválido!");
         }
     }
 }

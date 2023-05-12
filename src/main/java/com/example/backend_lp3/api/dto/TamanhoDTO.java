@@ -12,7 +12,7 @@ import org.modelmapper.ModelMapper;
 public class TamanhoDTO {
 
     private Long id;
-    private String nome;
+    private String nomeTamanho;
 
     public static TamanhoDTO create(Tamanho tamanho) {
         ModelMapper modelMapper = new ModelMapper();

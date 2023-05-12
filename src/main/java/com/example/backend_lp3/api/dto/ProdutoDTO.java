@@ -1,6 +1,5 @@
 package com.example.backend_lp3.api.dto;
 
-import com.example.backend_lp3.model.entity.Pedido;
 import com.example.backend_lp3.model.entity.Produto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +12,7 @@ import org.modelmapper.ModelMapper;
 public class ProdutoDTO {
 
     private Long id;
-    private String nome;
+    private String nomeProduto;
     private int quantidadeMin;
     private int quantidadeMax;
 

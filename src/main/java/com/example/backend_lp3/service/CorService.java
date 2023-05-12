@@ -43,8 +43,8 @@ public class CorService {
     }
 
     public void validar(Cor cor) {
-        if (cor.getNome() == null || cor.getNome().trim().equals("")) {
-            throw new RegraNegocioException("Nome inválido!");
+        if (cor.getNomeCor() == null || cor.getNomeCor().trim().equals("")) {
+            throw new RegraNegocioException("Cor inválida!");
         }
     }
 }

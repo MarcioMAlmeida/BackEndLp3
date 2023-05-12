@@ -41,8 +41,8 @@ public class GeneroService {
     }
 
     public void validar(Genero genero) {
-        if (genero.getNome() == null || genero.getNome().trim().equals("")) {
-            throw new RegraNegocioException("Nome inválido!");
+        if (genero.getNomeGenero() == null || genero.getNomeGenero().trim().equals("")) {
+            throw new RegraNegocioException("Gênero inválido!");
         }
     }
 }

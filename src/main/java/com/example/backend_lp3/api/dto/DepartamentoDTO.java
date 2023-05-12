@@ -12,7 +12,7 @@ import org.modelmapper.ModelMapper;
 public class DepartamentoDTO {
 
     private Long id;
-    private String nome;
+    private String nomeDepartamento;
 
     public static DepartamentoDTO create(Departamento departamento) {
         ModelMapper modelMapper = new ModelMapper();

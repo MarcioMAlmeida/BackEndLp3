@@ -1,7 +1,5 @@
 package com.example.backend_lp3.api.controller;
 
-import com.example.backend_lp3.api.dto.ProdutoDTO;
-import com.example.backend_lp3.api.dto.ProdutoEstoqueDTO;
 import com.example.backend_lp3.api.dto.ProdutoEstoqueDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.*;
@@ -26,6 +24,7 @@ import java.util.stream.Collectors;
 public class ProdutoEstoqueController {
 
     private final ProdutoEstoqueService service;
+    private final ProdutoService produtoService;
     private final DepartamentoService departamentoService;
     private final CorService corService;
     private final TamanhoService tamanhoService;
@@ -67,6 +66,8 @@ public class ProdutoEstoqueController {
             ProdutoEstoque produtoEstoque = converter(dto);
             Departamento departamento = departamentoService.salvar(produtoEstoque.getDepartamento());
             produtoEstoque.setDepartamento(departamento);
+            Produto produto = produtoService.salvar(produtoEstoque.getProduto());
+            produtoEstoque.setProduto(produto);
             Cor cor = corService.salvar(produtoEstoque.getCor());
             produtoEstoque.setCor(cor);
             Tamanho tamanho = tamanhoService.salvar(produtoEstoque.getTamanho());
@@ -130,14 +131,57 @@ public class ProdutoEstoqueController {
     public ProdutoEstoque converter(ProdutoEstoqueDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         ProdutoEstoque produtoEstoque = modelMapper.map(dto, ProdutoEstoque.class);
-        Departamento departamento = modelMapper.map(dto, Departamento.class);
-        produtoEstoque.setDepartamento(departamento);
-        Cor cor = modelMapper.map(dto, Cor.class);
-        produtoEstoque.setCor(cor);
-        Tamanho tamanho = modelMapper.map(dto, Tamanho.class);
-        produtoEstoque.setTamanho(tamanho);
-        Genero genero = modelMapper.map(dto, Genero.class);
-        produtoEstoque.setGenero(genero);
+//        Departamento departamento = modelMapper.map(dto, Departamento.class);
+//        produtoEstoque.setDepartamento(departamento);
+//        Produto produto = modelMapper.map(dto, Produto.class);
+//        produtoEstoque.setProduto(produto);
+//        Cor cor = modelMapper.map(dto, Cor.class);
+//        produtoEstoque.setCor(cor);
+//        Tamanho tamanho = modelMapper.map(dto, Tamanho.class);
+//        produtoEstoque.setTamanho(tamanho);
+//        Genero genero = modelMapper.map(dto, Genero.class);
+//        produtoEstoque.setGenero(genero);
+        if (dto.getIdDepartamento() != null) {
+            Optional<Departamento> departamento = departamentoService.getDepartamentoById(dto.getIdDepartamento());
+            if (!departamento.isPresent()) {
+                produtoEstoque.setDepartamento(null);
+            } else {
+                produtoEstoque.setDepartamento(departamento.get());
+            }
+        }
+        if (dto.getIdProduto() != null) {
+            Optional<Produto> produto = produtoService.getProdutoById(dto.getIdProduto());
+            if (!produto.isPresent()) {
+                produtoEstoque.setProduto(null);
+            } else {
+                produtoEstoque.setProduto(produto.get());
+            }
+        }
+        if (dto.getIdCor() != null) {
+            Optional<Cor> cor = corService.getCorById(dto.getIdCor());
+            if (!cor.isPresent()) {
+                produtoEstoque.setCor(null);
+            } else {
+                produtoEstoque.setCor(cor.get());
+            }
+        }
+        if (dto.getIdTamanho() != null) {
+            Optional<Tamanho> tamanho = tamanhoService.getTamanhoById(dto.getIdTamanho());
+            if (!tamanho.isPresent()) {
+                produtoEstoque.setTamanho(null);
+            } else {
+                produtoEstoque.setTamanho(tamanho.get());
+            }
+        }
+        if (dto.getIdGenero() != null) {
+            Optional<Genero> genero = generoService.getGeneroById(dto.getIdGenero());
+            if (!genero.isPresent()) {
+                produtoEstoque.setGenero(null);
+            } else {
+                produtoEstoque.setGenero(genero.get());
+            }
+        }
+
         return produtoEstoque;
     }
 }
