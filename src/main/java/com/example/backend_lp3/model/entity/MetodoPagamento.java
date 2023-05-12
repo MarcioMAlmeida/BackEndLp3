@@ -20,5 +20,5 @@ public class MetodoPagamento {
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private Long id;
 
-    private String nome;
+    private String nomeMetodoPagamento;
 }

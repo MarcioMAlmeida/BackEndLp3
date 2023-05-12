@@ -14,11 +14,11 @@ public class ProdutoEstoqueDTO {
     private Long id;
     private int quantidade;
     private float precoUnitario;
-    private Produto produto;
-    private Departamento departamento;
-    private Cor cor;
-    private Tamanho tamanho;
-    private Genero genero;
+    private Long idProduto;
+    private Long idDepartamento;
+    private Long idCor;
+    private Long idTamanho;
+    private Long idGenero;
 
     public static ProdutoEstoqueDTO create(ProdutoEstoque produtoEstoque) {
         ModelMapper modelMapper = new ModelMapper();

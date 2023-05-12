@@ -13,7 +13,7 @@ import org.modelmapper.ModelMapper;
 public class GeneroDTO {
 
     private Long id;
-    private String nome;
+    private String nomeGenero;
 
     public static GeneroDTO create(Genero genero) {
         ModelMapper modelMapper = new ModelMapper();

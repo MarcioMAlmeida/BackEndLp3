@@ -13,7 +13,7 @@ import org.modelmapper.ModelMapper;
 public class CorDTO {
 
     private Long id;
-    private String nome;
+    private String nomeCor;
 
     public static CorDTO create(Cor cor) {
         ModelMapper modelMapper = new ModelMapper();

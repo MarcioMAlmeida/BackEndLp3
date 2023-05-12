@@ -41,8 +41,8 @@ public class MetodoPagamentoService {
     }
 
     public void validar(MetodoPagamento metodoPagamento) {
-        if (metodoPagamento.getNome() == null || metodoPagamento.getNome().trim().equals("")) {
-            throw new RegraNegocioException("Nome inválido!");
+        if (metodoPagamento.getNomeMetodoPagamento() == null || metodoPagamento.getNomeMetodoPagamento().trim().equals("")) {
+            throw new RegraNegocioException("Metodo de Pagamento inválido!");
         }
     }
 }
