@@ -1,14 +1,15 @@
 package com.example.backend_lp3.api.controller;
 
 import com.example.backend_lp3.api.dto.VendaDTO;
-import com.example.backend_lp3.api.dto.VendaDTO;
+import com.example.backend_lp3.exception.RegraNegocioException;
+import com.example.backend_lp3.model.entity.*;
 import com.example.backend_lp3.model.entity.Venda;
-import com.example.backend_lp3.model.entity.Venda;
-import com.example.backend_lp3.service.VendaService;
+import com.example.backend_lp3.service.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,10 @@ import java.util.stream.Collectors;
 public class VendaController {
 
     private final VendaService service;
+    private final FuncionarioService funcionarioService;
+    private final ClienteService clienteService;
+    private final MetodoPagamentoService metodoPagamentoService;
+    private final ProdutoEstoqueService produtoEstoqueService;
 
     @GetMapping()
     @ApiOperation("Obter detalhes de todas as Vendas")
@@ -36,7 +41,7 @@ public class VendaController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation("Obter detalhes de Venda específica")
+    @ApiOperation("Obter detalhes de uma Venda específica")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Venda encontrada"),
             @ApiResponse(code = 404, message = "Venda não encontrada")
@@ -44,8 +49,71 @@ public class VendaController {
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Venda> venda = service.getVendaById(id);
         if (!venda.isPresent()) {
-            return new ResponseEntity("Venda não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Venda não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(venda.map(VendaDTO::create));
+    }
+
+    @PostMapping()
+    @ApiOperation("Salvar novo Venda no estoque")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Venda encontrada"),
+            @ApiResponse(code = 404, message = "Venda não encontrada")
+    })
+    public ResponseEntity post(@RequestBody VendaDTO dto) {
+        try {
+            Venda venda = converter(dto);
+            Funcionario funcionario = funcionarioService.salvar(venda.getFuncionario());
+            venda.setFuncionario(funcionario);
+            Cliente cliente = clienteService.salvar(venda.getCliente());
+            venda.setCliente(cliente);
+            MetodoPagamento metodoPagamento = metodoPagamentoService.salvar(venda.getMetodoPagamento());
+            venda.setMetodoPagamento(metodoPagamento);
+            ProdutoEstoque produtoEstoque = produtoEstoqueService.salvar(venda.getProdutoEstoque());
+            venda.setProdutoEstoque(produtoEstoque);
+            venda = service.salvar(venda);
+            return new ResponseEntity(venda, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Venda converter(VendaDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Venda venda = modelMapper.map(dto, Venda.class);
+        if (dto.getIdFuncionario() != null) {
+            Optional<Funcionario> funcionario = funcionarioService.getFuncionarioById(dto.getIdFuncionario());
+            if (!funcionario.isPresent()) {
+                venda.setFuncionario(null);
+            } else {
+                venda.setFuncionario(funcionario.get());
+            }
+        }
+        if (dto.getIdCliente() != null) {
+            Optional<Cliente> cliente = clienteService.getClienteById(dto.getIdCliente());
+            if (!cliente.isPresent()) {
+                venda.setCliente(null);
+            } else {
+                venda.setCliente(cliente.get());
+            }
+        }
+        if (dto.getIdMetodoPagamento() != null) {
+            Optional<MetodoPagamento> metodoPagamento = metodoPagamentoService.getMetodoPagamentoById(dto.getIdMetodoPagamento());
+            if (!metodoPagamento.isPresent()) {
+                venda.setMetodoPagamento(null);
+            } else {
+                venda.setMetodoPagamento(metodoPagamento.get());
+            }
+        }
+        if (dto.getIdProdutoEstoque() != null) {
+            Optional<ProdutoEstoque> produtoEstoque = produtoEstoqueService.getProdutoEstoqueById(dto.getIdProdutoEstoque());
+            if (!produtoEstoque.isPresent()) {
+                venda.setProdutoEstoque(null);
+            } else {
+                venda.setProdutoEstoque(produtoEstoque.get());
+            }
+        }
+
+        return venda;
     }
 }

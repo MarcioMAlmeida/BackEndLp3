@@ -16,10 +16,10 @@ public class VendaDTO {
     private Long id;
     private LocalDateTime dataVenda;
     private float precoTotal;
-    private Funcionario funcionario;
-    private Cliente cliente;
-    private ProdutoEstoque produtoEstoque;
-    private MetodoPagamento metodoPagamento;
+    private Long idFuncionario;
+    private Long idCliente;
+    private Long idProdutoEstoque;
+    private Long idMetodoPagamento;
 
     public static VendaDTO create(Venda venda) {
         ModelMapper modelMapper = new ModelMapper();
