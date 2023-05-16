@@ -1,6 +1,7 @@
 package com.example.backend_lp3.api.controller;
 
 import com.example.backend_lp3.api.dto.VendaDTO;
+import com.example.backend_lp3.api.dto.VendaDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.*;
 import com.example.backend_lp3.model.entity.Venda;
@@ -55,7 +56,7 @@ public class VendaController {
     }
 
     @PostMapping()
-    @ApiOperation("Salvar novo Venda no estoque")
+    @ApiOperation("Salvar uma nova Venda")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Venda encontrada"),
             @ApiResponse(code = 404, message = "Venda não encontrada")
@@ -73,6 +74,53 @@ public class VendaController {
             venda.setProdutoEstoque(produtoEstoque);
             venda = service.salvar(venda);
             return new ResponseEntity(venda, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    @ApiOperation("Alterar dados de uma Venda")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Venda encontrada"),
+            @ApiResponse(code = 404, message = "Venda não encontrada")
+    })
+    public ResponseEntity atualizar(@PathVariable("id") Long id, VendaDTO dto) {
+        if (!service.getVendaById(id).isPresent()) {
+            return new ResponseEntity("Venda não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Venda venda = converter(dto);
+            venda.setId(id);
+            Funcionario funcionario = funcionarioService.salvar(venda.getFuncionario());
+            venda.setFuncionario(funcionario);
+            Cliente cliente = clienteService.salvar(venda.getCliente());
+            venda.setCliente(cliente);
+            ProdutoEstoque produtoEstoque = produtoEstoqueService.salvar(venda.getProdutoEstoque());
+            venda.setProdutoEstoque(produtoEstoque);
+            MetodoPagamento metodoPagamento = metodoPagamentoService.salvar(venda.getMetodoPagamento());
+            venda.setMetodoPagamento(metodoPagamento);
+            service.salvar(venda);
+            return ResponseEntity.ok(venda);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    @ApiOperation("Deletar uma Venda")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Venda encontrada"),
+            @ApiResponse(code = 404, message = "Venda não encontrada")
+    })
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Venda> venda = service.getVendaById(id);
+        if(!venda.isPresent()) {
+            return new ResponseEntity("Venda não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(venda.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -113,7 +161,6 @@ public class VendaController {
                 venda.setProdutoEstoque(produtoEstoque.get());
             }
         }
-
         return venda;
     }
 }

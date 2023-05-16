@@ -18,9 +18,9 @@ public class PedidoDTO {
     private LocalDateTime dataPedido;
     private LocalDateTime dataEntrega;
     private float precoTotal;
-    private Fornecedor fornecedor;
-    private Gerente gerente;
-    private ProdutoEstoque produtoEstoque;
+    private Long idFornecedor;
+    private Long idGerente;
+    private Long idProdutoEstoque;
 
     public static PedidoDTO create(Pedido pedido) {
         ModelMapper modelMapper = new ModelMapper();
