@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -72,6 +74,7 @@ public class VendaController {
             venda.setMetodoPagamento(metodoPagamento);
             ProdutoEstoque produtoEstoque = produtoEstoqueService.salvar(venda.getProdutoEstoque());
             venda.setProdutoEstoque(produtoEstoque);
+            venda.setDataVenda(LocalDateTime.now(ZoneId.of("UTC")));
             venda = service.salvar(venda);
             return new ResponseEntity(venda, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
