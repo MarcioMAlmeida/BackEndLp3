@@ -72,7 +72,7 @@ public class CorController {
             @ApiResponse(code = 200, message = "Cor encontrada"),
             @ApiResponse(code = 404, message = "Cor não encontrada")
     })
-    public ResponseEntity atualizar(@PathVariable("id") Long id, CorDTO dto) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody CorDTO dto) {
         if (!service.getCorById(id).isPresent()) {
             return new ResponseEntity("Cor não encontrada", HttpStatus.NOT_FOUND);
         }
@@ -89,7 +89,7 @@ public class CorController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar uma cor")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Cor encontrada"),
+            @ApiResponse(code = 204, message = "Cor excluída"),
             @ApiResponse(code = 404, message = "Cor não encontrada")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

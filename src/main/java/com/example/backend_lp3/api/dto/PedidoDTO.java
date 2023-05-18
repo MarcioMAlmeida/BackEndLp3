@@ -20,7 +20,6 @@ public class PedidoDTO {
     private float precoTotal;
     private Long idFornecedor;
     private Long idGerente;
-    private Long idProdutoEstoque;
 
     public static PedidoDTO create(Pedido pedido) {
         ModelMapper modelMapper = new ModelMapper();

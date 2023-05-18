@@ -1,30 +1,26 @@
 package com.example.backend_lp3.model.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Venda {
+public class ProdutoVenda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime dataVenda;
-    private float precoTotal;
+    @ManyToOne
+    private ProdutoEstoque produtoEstoque;
 
     @ManyToOne
-    private Funcionario funcionario;
-    @ManyToOne
-    private Cliente cliente;
-    @ManyToOne
-    private MetodoPagamento metodoPagamento;
+    private Venda venda;
+
+    private int quantidade;
 }

@@ -26,7 +26,7 @@ public class PedidoController {
     private final PedidoService service;
     private final GerenteService gerenteService;
     private final FornecedorService fornecedorService;
-    private final ProdutoEstoqueService produtoEstoqueService;
+    private final ProdutoPedidoService produtoPedidoService;
 
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os Pedidos")
@@ -66,8 +66,6 @@ public class PedidoController {
             pedido.setGerente(gerente);
             Fornecedor fornecedor = fornecedorService.salvar(pedido.getFornecedor());
             pedido.setFornecedor(fornecedor);
-            ProdutoEstoque produtoEstoque = produtoEstoqueService.salvar(pedido.getProdutoEstoque());
-            pedido.setProdutoEstoque(produtoEstoque);
             pedido = service.salvar(pedido);
             return new ResponseEntity(pedido, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
@@ -81,7 +79,7 @@ public class PedidoController {
             @ApiResponse(code = 200, message = "Pedido encontrada"),
             @ApiResponse(code = 404, message = "Pedido não encontrada")
     })
-    public ResponseEntity atualizar(@PathVariable("id") Long id, PedidoDTO dto) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody PedidoDTO dto) {
         if (!service.getPedidoById(id).isPresent()) {
             return new ResponseEntity("Pedido não encontrada", HttpStatus.NOT_FOUND);
         }
@@ -92,8 +90,6 @@ public class PedidoController {
             pedido.setGerente(gerente);
             Fornecedor fornecedor = fornecedorService.salvar(pedido.getFornecedor());
             pedido.setFornecedor(fornecedor);
-            ProdutoEstoque produtoEstoque = produtoEstoqueService.salvar(pedido.getProdutoEstoque());
-            pedido.setProdutoEstoque(produtoEstoque);
             service.salvar(pedido);
             return ResponseEntity.ok(pedido);
         } catch (RegraNegocioException e) {
@@ -104,7 +100,7 @@ public class PedidoController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar uma Pedido")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Pedido encontrada"),
+            @ApiResponse(code = 204, message = "Pedido excluído"),
             @ApiResponse(code = 404, message = "Pedido não encontrada")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
@@ -137,14 +133,6 @@ public class PedidoController {
                 pedido.setFornecedor(null);
             } else {
                 pedido.setFornecedor(fornecedor.get());
-            }
-        }
-        if (dto.getIdProdutoEstoque() != null) {
-            Optional<ProdutoEstoque> produtoEstoque = produtoEstoqueService.getProdutoEstoqueById(dto.getIdProdutoEstoque());
-            if (!produtoEstoque.isPresent()) {
-                pedido.setProdutoEstoque(null);
-            } else {
-                pedido.setProdutoEstoque(produtoEstoque.get());
             }
         }
         return pedido;

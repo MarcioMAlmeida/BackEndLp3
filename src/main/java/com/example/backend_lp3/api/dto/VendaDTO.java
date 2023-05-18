@@ -18,7 +18,6 @@ public class VendaDTO {
     private float precoTotal;
     private Long idFuncionario;
     private Long idCliente;
-    private Long idProdutoEstoque;
     private Long idMetodoPagamento;
 
     public static VendaDTO create(Venda venda) {
