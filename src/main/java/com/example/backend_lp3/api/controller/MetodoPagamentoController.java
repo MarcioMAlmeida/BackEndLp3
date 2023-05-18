@@ -68,10 +68,10 @@ public class MetodoPagamentoController {
     @PutMapping("{id}")
     @ApiOperation("Alterar dados de um método de pagamento")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Método de Pagamento encontrado"),
+            @ApiResponse(code = 204, message = "Método de Pagamento excluído"),
             @ApiResponse(code = 404, message = "Método de Pagamento não encontrado")
     })
-    public ResponseEntity atualizar(@PathVariable("id") Long id, MetodoPagamentoDTO dto) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody MetodoPagamentoDTO dto) {
         if (!service.getMetodoPagamentoById(id).isPresent()) {
             return new ResponseEntity("Meétodo de pagamento não encontrado", HttpStatus.NOT_FOUND);
         }

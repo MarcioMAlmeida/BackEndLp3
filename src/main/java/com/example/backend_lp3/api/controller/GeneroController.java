@@ -71,7 +71,7 @@ public class GeneroController {
             @ApiResponse(code = 200, message = "Gênero encontrado"),
             @ApiResponse(code = 404, message = "Gênero não encontrado")
     })
-    public ResponseEntity atualizar(@PathVariable("id") Long id, GeneroDTO dto) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody GeneroDTO dto) {
         if (!service.getGeneroById(id).isPresent()) {
             return new ResponseEntity("Genero não encontrado", HttpStatus.NOT_FOUND);
         }
@@ -88,7 +88,7 @@ public class GeneroController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar um Gênero")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Gênero encontrado"),
+            @ApiResponse(code = 204, message = "Gênero excluído"),
             @ApiResponse(code = 404, message = "Gênero não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

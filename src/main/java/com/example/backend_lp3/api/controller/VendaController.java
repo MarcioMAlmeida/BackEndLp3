@@ -28,7 +28,7 @@ public class VendaController {
     private final FuncionarioService funcionarioService;
     private final ClienteService clienteService;
     private final MetodoPagamentoService metodoPagamentoService;
-    private final ProdutoEstoqueService produtoEstoqueService;
+    private final ProdutoVendaService produtoVendaService;
 
     @GetMapping()
     @ApiOperation("Obter detalhes de todas as Vendas")
@@ -70,8 +70,6 @@ public class VendaController {
             venda.setCliente(cliente);
             MetodoPagamento metodoPagamento = metodoPagamentoService.salvar(venda.getMetodoPagamento());
             venda.setMetodoPagamento(metodoPagamento);
-            ProdutoEstoque produtoEstoque = produtoEstoqueService.salvar(venda.getProdutoEstoque());
-            venda.setProdutoEstoque(produtoEstoque);
             venda = service.salvar(venda);
             return new ResponseEntity(venda, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
@@ -85,7 +83,7 @@ public class VendaController {
             @ApiResponse(code = 200, message = "Venda encontrada"),
             @ApiResponse(code = 404, message = "Venda não encontrada")
     })
-    public ResponseEntity atualizar(@PathVariable("id") Long id, VendaDTO dto) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody VendaDTO dto) {
         if (!service.getVendaById(id).isPresent()) {
             return new ResponseEntity("Venda não encontrada", HttpStatus.NOT_FOUND);
         }
@@ -96,8 +94,6 @@ public class VendaController {
             venda.setFuncionario(funcionario);
             Cliente cliente = clienteService.salvar(venda.getCliente());
             venda.setCliente(cliente);
-            ProdutoEstoque produtoEstoque = produtoEstoqueService.salvar(venda.getProdutoEstoque());
-            venda.setProdutoEstoque(produtoEstoque);
             MetodoPagamento metodoPagamento = metodoPagamentoService.salvar(venda.getMetodoPagamento());
             venda.setMetodoPagamento(metodoPagamento);
             service.salvar(venda);
@@ -110,7 +106,7 @@ public class VendaController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar uma Venda")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Venda encontrada"),
+            @ApiResponse(code = 204, message = "Venda excluída"),
             @ApiResponse(code = 404, message = "Venda não encontrada")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
@@ -151,14 +147,6 @@ public class VendaController {
                 venda.setMetodoPagamento(null);
             } else {
                 venda.setMetodoPagamento(metodoPagamento.get());
-            }
-        }
-        if (dto.getIdProdutoEstoque() != null) {
-            Optional<ProdutoEstoque> produtoEstoque = produtoEstoqueService.getProdutoEstoqueById(dto.getIdProdutoEstoque());
-            if (!produtoEstoque.isPresent()) {
-                venda.setProdutoEstoque(null);
-            } else {
-                venda.setProdutoEstoque(produtoEstoque.get());
             }
         }
         return venda;

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 
 @Entity
 @Data
@@ -13,7 +14,5 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 public class Funcionario extends Pessoa {
 
-    private String login;
-    private String senha;
     private String cpf;
 }

@@ -42,7 +42,7 @@ public class PedidoService {
 
     public void validar(Pedido pedido) {
         //if (pedido.getNome() == null || pedido.getNome().trim().equals("")) {
-        //    throw new RegraNegocioException("Nome inválido!");
+        //  throw new RegraNegocioException("Nome inválido!");
         //}
     }
 }

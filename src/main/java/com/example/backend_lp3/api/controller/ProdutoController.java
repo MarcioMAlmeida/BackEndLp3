@@ -75,12 +75,13 @@ public class ProdutoController {
             @ApiResponse(code = 200, message = "Produto encontrado"),
             @ApiResponse(code = 404, message = "Produto não encontrado")
     })
-    public ResponseEntity atualizar(@PathVariable("id") Long id, ProdutoDTO dto) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody ProdutoDTO dto) {
         if (!service.getProdutoById(id).isPresent()) {
             return new ResponseEntity("Produto não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             Produto produto = converter(dto);
+            System.out.println(produto);
             produto.setId(id);
             service.salvar(produto);
             return ResponseEntity.ok(produto);
@@ -92,7 +93,7 @@ public class ProdutoController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar uma produto")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Produto encontrado"),
+            @ApiResponse(code = 204, message = "Produto excluído"),
             @ApiResponse(code = 404, message = "Produto não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
