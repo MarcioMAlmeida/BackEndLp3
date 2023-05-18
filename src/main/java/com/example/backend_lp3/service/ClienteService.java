@@ -29,7 +29,7 @@ public class ClienteService {
 
     @Transactional
     public Cliente salvar(Cliente cliente) {
-        validar(cliente);
+        //validar(cliente);
         return repository.save(cliente);
     }
 
