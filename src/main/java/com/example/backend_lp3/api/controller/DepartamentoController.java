@@ -88,7 +88,7 @@ public class DepartamentoController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar um Departamento")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Departamento encontrado"),
+            @ApiResponse(code = 204, message = "Departamento excluído"),
             @ApiResponse(code = 404, message = "Departamento não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

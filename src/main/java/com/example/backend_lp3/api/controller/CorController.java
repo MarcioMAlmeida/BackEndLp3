@@ -89,7 +89,7 @@ public class CorController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar uma cor")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Cor encontrada"),
+            @ApiResponse(code = 204, message = "Cor excluída"),
             @ApiResponse(code = 404, message = "Cor não encontrada")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

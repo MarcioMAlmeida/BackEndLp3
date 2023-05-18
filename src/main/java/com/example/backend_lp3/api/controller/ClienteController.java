@@ -95,7 +95,7 @@ public class ClienteController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar um cliente")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Cliente encontrado"),
+            @ApiResponse(code = 204, message = "Cliente excluído"),
             @ApiResponse(code = 404, message = "Cliente não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

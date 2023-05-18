@@ -95,7 +95,7 @@ public class GerenteController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar um gerente")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Gerente encontrado"),
+            @ApiResponse(code = 204, message = "Gerente excluído"),
             @ApiResponse(code = 404, message = "Gerente não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

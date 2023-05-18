@@ -95,7 +95,7 @@ public class FornecedorController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar um fornecedor")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Fornecedor encontrado"),
+            @ApiResponse(code = 204, message = "Fornecedor excluído"),
             @ApiResponse(code = 404, message = "Fornecedor não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

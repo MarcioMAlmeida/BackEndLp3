@@ -112,7 +112,7 @@ public class ProdutoEstoqueController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar um Produto do estoque")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Produto encontrado"),
+            @ApiResponse(code = 204, message = "Produto excluído"),
             @ApiResponse(code = 404, message = "Produto não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

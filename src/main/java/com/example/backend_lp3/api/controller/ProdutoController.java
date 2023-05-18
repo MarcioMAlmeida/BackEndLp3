@@ -93,7 +93,7 @@ public class ProdutoController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar uma produto")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Produto encontrado"),
+            @ApiResponse(code = 204, message = "Produto excluído"),
             @ApiResponse(code = 404, message = "Produto não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

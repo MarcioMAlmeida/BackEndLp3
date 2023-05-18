@@ -88,7 +88,7 @@ public class TamanhoController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar um Tamanho")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Tamanho encontrado"),
+            @ApiResponse(code = 204, message = "Tamanho excluído"),
             @ApiResponse(code = 404, message = "Tamanho não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

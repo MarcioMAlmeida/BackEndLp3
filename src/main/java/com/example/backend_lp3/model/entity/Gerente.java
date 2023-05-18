@@ -12,8 +12,5 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Gerente extends Pessoa{
-
-    private String login;
-    private String senha;
     private String cpf;
 }

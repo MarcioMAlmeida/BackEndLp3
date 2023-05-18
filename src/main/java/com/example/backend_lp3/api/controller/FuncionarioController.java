@@ -95,7 +95,7 @@ public class FuncionarioController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar um funcionário")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Funcionário encontrado"),
+            @ApiResponse(code = 204, message = "Funcionário excluído"),
             @ApiResponse(code = 404, message = "Funcionário não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
