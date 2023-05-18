@@ -76,7 +76,7 @@ public class GerenteController {
             @ApiResponse(code = 200, message = "Gerente encontrado"),
             @ApiResponse(code = 404, message = "Gerente não encontrado")
     })
-    public ResponseEntity atualizar(@PathVariable("id") Long id, GerenteDTO dto) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody GerenteDTO dto) {
         if (!service.getGerenteById(id).isPresent()) {
             return new ResponseEntity("Gerente não encontrado", HttpStatus.NOT_FOUND);
         }

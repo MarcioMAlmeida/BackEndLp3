@@ -76,7 +76,7 @@ public class ClienteController {
             @ApiResponse(code = 200, message = "Cliente encontrado"),
             @ApiResponse(code = 404, message = "Cliente não encontrado")
     })
-    public ResponseEntity atualizar(@PathVariable("id") Long id, ClienteDTO dto) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody ClienteDTO dto) {
         if (!service.getClienteById(id).isPresent()) {
             return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
         }

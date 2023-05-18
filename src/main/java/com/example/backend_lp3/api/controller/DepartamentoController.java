@@ -71,7 +71,7 @@ public class DepartamentoController {
             @ApiResponse(code = 200, message = "Departamento encontrado"),
             @ApiResponse(code = 404, message = "Departamento não encontrado")
     })
-    public ResponseEntity atualizar(@PathVariable("id") Long id, DepartamentoDTO dto) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody DepartamentoDTO dto) {
         if (!service.getDepartamentoById(id).isPresent()) {
             return new ResponseEntity("Departamento não encontrado", HttpStatus.NOT_FOUND);
         }

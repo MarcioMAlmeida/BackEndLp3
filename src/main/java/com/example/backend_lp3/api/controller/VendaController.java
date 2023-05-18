@@ -85,7 +85,7 @@ public class VendaController {
             @ApiResponse(code = 200, message = "Venda encontrada"),
             @ApiResponse(code = 404, message = "Venda não encontrada")
     })
-    public ResponseEntity atualizar(@PathVariable("id") Long id, VendaDTO dto) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody VendaDTO dto) {
         if (!service.getVendaById(id).isPresent()) {
             return new ResponseEntity("Venda não encontrada", HttpStatus.NOT_FOUND);
         }

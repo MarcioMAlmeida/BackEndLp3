@@ -87,7 +87,7 @@ public class ProdutoEstoqueController {
             @ApiResponse(code = 200, message = "Produto encontrado"),
             @ApiResponse(code = 404, message = "Produto não encontrado")
     })
-    public ResponseEntity atualizar(@PathVariable("id") Long id, ProdutoEstoqueDTO dto) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody ProdutoEstoqueDTO dto) {
         if (!service.getProdutoEstoqueById(id).isPresent()) {
             return new ResponseEntity("Produto não encontrado", HttpStatus.NOT_FOUND);
         }

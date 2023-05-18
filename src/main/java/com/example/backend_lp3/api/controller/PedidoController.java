@@ -81,7 +81,7 @@ public class PedidoController {
             @ApiResponse(code = 200, message = "Pedido encontrada"),
             @ApiResponse(code = 404, message = "Pedido não encontrada")
     })
-    public ResponseEntity atualizar(@PathVariable("id") Long id, PedidoDTO dto) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody PedidoDTO dto) {
         if (!service.getPedidoById(id).isPresent()) {
             return new ResponseEntity("Pedido não encontrada", HttpStatus.NOT_FOUND);
         }
