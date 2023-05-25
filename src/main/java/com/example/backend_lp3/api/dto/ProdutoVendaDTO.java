@@ -13,7 +13,7 @@ public class ProdutoVendaDTO {
 
     private Long id;
 
-    private int quantidade;
+    private Integer quantidade;
     private Long idVenda;
     private Long idProdutoEstoque;
 

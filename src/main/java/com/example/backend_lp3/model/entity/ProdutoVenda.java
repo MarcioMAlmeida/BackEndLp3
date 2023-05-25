@@ -22,5 +22,5 @@ public class ProdutoVenda {
     @ManyToOne
     private Venda venda;
 
-    private int quantidade;
+    private Integer quantidade;
 }

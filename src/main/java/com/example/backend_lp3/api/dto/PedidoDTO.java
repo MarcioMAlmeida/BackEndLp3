@@ -17,7 +17,7 @@ public class PedidoDTO {
 
     private LocalDateTime dataPedido;
     private LocalDateTime dataEntrega;
-    private float precoTotal;
+    private Double precoTotal;
     private Long idFornecedor;
     private Long idGerente;
 

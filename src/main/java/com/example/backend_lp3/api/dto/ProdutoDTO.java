@@ -13,8 +13,8 @@ public class ProdutoDTO {
 
     private Long id;
     private String nomeProduto;
-    private int quantidadeMin;
-    private int quantidadeMax;
+    private Integer quantidadeMin;
+    private Integer quantidadeMax;
 
     public static ProdutoDTO create(Produto produto) {
         ModelMapper modelMapper = new ModelMapper();

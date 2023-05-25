@@ -15,7 +15,7 @@ public class VendaDTO {
 
     private Long id;
     private LocalDateTime dataVenda;
-    private float precoTotal;
+    private Double precoTotal;
     private Long idFuncionario;
     private Long idCliente;
     private Long idMetodoPagamento;

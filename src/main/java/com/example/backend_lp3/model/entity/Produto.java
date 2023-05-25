@@ -20,6 +20,6 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nomeProduto;
-    private int quantidadeMin;
-    private int quantidadeMax;
+    private Integer quantidadeMin;
+    private Integer quantidadeMax;
 }

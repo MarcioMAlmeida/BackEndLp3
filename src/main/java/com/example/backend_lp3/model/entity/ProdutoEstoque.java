@@ -16,8 +16,8 @@ public class ProdutoEstoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int quantidade;
-    private float precoUnitario;
+    private Integer quantidade;
+    private Double precoUnitario;
 
 
     @ManyToOne

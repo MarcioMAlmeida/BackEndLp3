@@ -12,8 +12,8 @@ import org.modelmapper.ModelMapper;
 public class ProdutoEstoqueDTO {
 
     private Long id;
-    private int quantidade;
-    private float precoUnitario;
+    private Integer quantidade;
+    private Double precoUnitario;
     private Long idProduto;
     private Long idDepartamento;
     private Long idCor;

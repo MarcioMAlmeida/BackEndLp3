@@ -19,7 +19,7 @@ public class Venda {
     private Long id;
 
     private LocalDateTime dataVenda;
-    private float precoTotal;
+    private Double precoTotal;
 
     @ManyToOne
     private Funcionario funcionario;

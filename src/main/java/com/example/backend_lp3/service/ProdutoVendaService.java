@@ -1,7 +1,10 @@
 package com.example.backend_lp3.service;
 
+import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.ProdutoVenda;
+import com.example.backend_lp3.model.repository.ProdutoEstoqueRepository;
 import com.example.backend_lp3.model.repository.ProdutoVendaRepository;
+import com.example.backend_lp3.model.repository.VendaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,9 +16,13 @@ import java.util.Optional;
 public class ProdutoVendaService {
 
     private ProdutoVendaRepository repository;
+    private VendaRepository vendaRepository;
+    private ProdutoEstoqueRepository produtoEstoqueRepository;
 
-    public ProdutoVendaService(ProdutoVendaRepository repository) {
+    public ProdutoVendaService(ProdutoVendaRepository repository, VendaRepository vendaRepository, ProdutoEstoqueRepository produtoEstoqueRepository) {
         this.repository = repository;
+        this.vendaRepository = vendaRepository;
+        this.produtoEstoqueRepository = produtoEstoqueRepository;
     }
 
     public List<ProdutoVenda> getProdutoVendas(){
@@ -28,7 +35,20 @@ public class ProdutoVendaService {
 
     @Transactional
     public ProdutoVenda salvar(ProdutoVenda produtoVenda) {
-        validar(produtoVenda);
+        if(!vendaRepository.existsById(produtoVenda.getVenda().getId())) {
+            throw new RegraNegocioException("Venda com ID inválido");
+        }
+        if (produtoVenda.getQuantidade() < 0 || produtoVenda.getQuantidade() == null) {
+            throw new RegraNegocioException("Valor inválido para quantidade");
+        }
+        Integer unidadesDisponiveis = produtoVenda.getProdutoEstoque().getQuantidade() - produtoVenda.getQuantidade();
+        if(unidadesDisponiveis < 0) {
+            throw new RegraNegocioException("Quantidade de "+ produtoVenda.getProdutoEstoque().getProduto().getNomeProduto() +" insuficiente!");
+        }
+
+        produtoEstoqueRepository.retirarUnidadeEstoque(produtoVenda.getProdutoEstoque().getId(), produtoVenda.getQuantidade());
+        vendaRepository.atualizarPreco(produtoVenda.getVenda().getId(), (produtoVenda.getProdutoEstoque().getPrecoUnitario() * produtoVenda.getQuantidade()));
+
         return repository.save(produtoVenda);
     }
 
@@ -36,12 +56,6 @@ public class ProdutoVendaService {
     public void excluir(ProdutoVenda produtoVenda) {
         Objects.requireNonNull(produtoVenda.getId());
         repository.delete(produtoVenda);
-    }
-
-    public void validar(ProdutoVenda produtoVenda) {
-        //if (produtoVenda.getNome() == null || produtoVenda.getNome().trim().equals("")) {
-        //  throw new RegraNegocioException("Nome inválido!");
-        //}
     }
 
 }

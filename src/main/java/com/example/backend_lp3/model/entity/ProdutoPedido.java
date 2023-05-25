@@ -22,5 +22,6 @@ public class ProdutoPedido {
     @ManyToOne
     private Pedido pedido;
 
-    private int quantidade;
+    private Integer quantidade;
+    private Double valorTotal;
 }
