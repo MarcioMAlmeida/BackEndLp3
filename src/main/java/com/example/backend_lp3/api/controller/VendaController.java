@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/vendas")
 @RequiredArgsConstructor
+@CrossOrigin
 public class VendaController {
 
     private final VendaService service;

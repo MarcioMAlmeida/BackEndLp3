@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/produtos-estoque")
 @RequiredArgsConstructor
+@CrossOrigin
 public class ProdutoEstoqueController {
 
     private final ProdutoEstoqueService service;
