@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/gerentes")
 @RequiredArgsConstructor
+@CrossOrigin
 public class GerenteController {
 
     private final GerenteService service;

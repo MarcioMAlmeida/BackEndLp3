@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/fornecedores")
 @RequiredArgsConstructor
+@CrossOrigin
 public class FornecedorController {
 
     private final FornecedorService service;

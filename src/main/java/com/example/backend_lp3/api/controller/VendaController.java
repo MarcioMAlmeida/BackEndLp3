@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/vendas")
 @RequiredArgsConstructor
+@CrossOrigin
 public class VendaController {
 
     private final VendaService service;
@@ -70,6 +73,7 @@ public class VendaController {
             venda.setCliente(cliente);
             MetodoPagamento metodoPagamento = metodoPagamentoService.salvar(venda.getMetodoPagamento());
             venda.setMetodoPagamento(metodoPagamento);
+            venda.setDataVenda(LocalDateTime.now(ZoneId.of("UTC")));
             venda = service.salvar(venda);
             return new ResponseEntity(venda, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {

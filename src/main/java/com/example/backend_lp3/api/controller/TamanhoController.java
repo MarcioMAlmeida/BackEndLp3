@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/tamanhos")
 @RequiredArgsConstructor
+@CrossOrigin
 public class TamanhoController {
 
     private final TamanhoService service;

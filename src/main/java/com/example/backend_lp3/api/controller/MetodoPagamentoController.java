@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/metodos-pagamento")
 @RequiredArgsConstructor
+@CrossOrigin
 public class MetodoPagamentoController {
 
     private final MetodoPagamentoService service;

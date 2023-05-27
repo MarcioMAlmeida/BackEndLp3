@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/cores")
 @RequiredArgsConstructor
+@CrossOrigin
 public class CorController {
 
     private final CorService service;

@@ -17,10 +17,10 @@ public class ProdutoVenda {
     private Long id;
 
     @ManyToOne
-    private ProdutoEstoque produtoEstoque;
+    private Produto produto;
 
     @ManyToOne
     private Venda venda;
 
-    private int quantidade;
+    private Integer quantidade;
 }

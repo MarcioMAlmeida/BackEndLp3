@@ -20,7 +20,7 @@ public class Pedido {
 
     private LocalDateTime dataPedido;
     private LocalDateTime dataEntrega;
-    private float precoTotal;
+    private Double precoTotal;
 
     @ManyToOne
     private Fornecedor fornecedor;

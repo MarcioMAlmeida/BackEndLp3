@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/generos")
 @RequiredArgsConstructor
+@CrossOrigin
 public class GeneroController {
 
     private final GeneroService service;

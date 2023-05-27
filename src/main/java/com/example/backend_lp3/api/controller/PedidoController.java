@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/pedidos")
 @RequiredArgsConstructor
+@CrossOrigin
 public class PedidoController {
 
     private final PedidoService service;

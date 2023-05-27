@@ -2,11 +2,11 @@ package com.example.backend_lp3.api.controller;
 
 import com.example.backend_lp3.api.dto.ProdutoVendaDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
+import com.example.backend_lp3.model.entity.Produto;
 import com.example.backend_lp3.model.entity.Venda;
-import com.example.backend_lp3.model.entity.ProdutoEstoque;
 import com.example.backend_lp3.model.entity.ProdutoVenda;
+import com.example.backend_lp3.service.ProdutoService;
 import com.example.backend_lp3.service.VendaService;
-import com.example.backend_lp3.service.ProdutoEstoqueService;
 import com.example.backend_lp3.service.ProdutoVendaService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -24,11 +24,12 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/produtos-venda")
 @RequiredArgsConstructor
+@CrossOrigin
 public class ProdutoVendaController {
 
     private final ProdutoVendaService service;
     private final VendaService vendaService;
-    private final ProdutoEstoqueService produtoEstoqueService;
+    private final ProdutoService produtoService;
 
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os ProdutoVendas")
@@ -66,8 +67,8 @@ public class ProdutoVendaController {
             ProdutoVenda produtoVenda = converter(dto);
             Venda venda = vendaService.salvar(produtoVenda.getVenda());
             produtoVenda.setVenda(venda);
-            ProdutoEstoque produtoEstoque = produtoEstoqueService.salvar(produtoVenda.getProdutoEstoque());
-            produtoVenda.setProdutoEstoque(produtoEstoque);
+            Produto produto = produtoService.salvar(produtoVenda.getProduto());
+            produtoVenda.setProduto(produto);
             produtoVenda = service.salvar(produtoVenda);
             return new ResponseEntity(produtoVenda, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
@@ -90,8 +91,8 @@ public class ProdutoVendaController {
             produtoVenda.setId(id);
             Venda venda = vendaService.salvar(produtoVenda.getVenda());
             produtoVenda.setVenda(venda);
-            ProdutoEstoque produtoEstoque = produtoEstoqueService.salvar(produtoVenda.getProdutoEstoque());
-            produtoVenda.setProdutoEstoque(produtoEstoque);
+            Produto produto = produtoService.salvar(produtoVenda.getProduto());
+            produtoVenda.setProduto(produto);
             service.salvar(produtoVenda);
             return ResponseEntity.ok(produtoVenda);
         } catch (RegraNegocioException e) {
@@ -129,12 +130,12 @@ public class ProdutoVendaController {
                 produtoVenda.setVenda(venda.get());
             }
         }
-        if (dto.getIdProdutoEstoque() != null) {
-            Optional<ProdutoEstoque> produtoEstoque = produtoEstoqueService.getProdutoEstoqueById(dto.getIdProdutoEstoque());
-            if (!produtoEstoque.isPresent()) {
-                produtoVenda.setProdutoEstoque(null);
+        if (dto.getIdProduto() != null) {
+            Optional<Produto> produto = produtoService.getProdutoById(dto.getIdProduto());
+            if (!produto.isPresent()) {
+                produtoVenda.setProduto(null);
             } else {
-                produtoVenda.setProdutoEstoque(produtoEstoque.get());
+                produtoVenda.setProduto(produto.get());
             }
         }
         return produtoVenda;
