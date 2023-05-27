@@ -3,13 +3,11 @@ package com.example.backend_lp3.api.controller;
 import com.example.backend_lp3.api.dto.ProdutoPedidoDTO;
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.Pedido;
-import com.example.backend_lp3.model.entity.Gerente;
+import com.example.backend_lp3.model.entity.Produto;
 import com.example.backend_lp3.model.entity.ProdutoPedido;
-import com.example.backend_lp3.model.entity.ProdutoEstoque;
 import com.example.backend_lp3.service.PedidoService;
-import com.example.backend_lp3.service.GerenteService;
 import com.example.backend_lp3.service.ProdutoPedidoService;
-import com.example.backend_lp3.service.ProdutoEstoqueService;
+import com.example.backend_lp3.service.ProdutoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -31,7 +29,7 @@ public class ProdutoPedidoController {
 
     private final ProdutoPedidoService service;
     private final PedidoService pedidoService;
-    private final ProdutoEstoqueService produtoEstoqueService;
+    private final ProdutoService produtoService;
 
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os ProdutoPedidos")
@@ -69,8 +67,8 @@ public class ProdutoPedidoController {
             ProdutoPedido produtoPedido = converter(dto);
             Pedido pedido = pedidoService.salvar(produtoPedido.getPedido());
             produtoPedido.setPedido(pedido);
-            ProdutoEstoque produtoEstoque = produtoEstoqueService.salvar(produtoPedido.getProdutoEstoque());
-            produtoPedido.setProdutoEstoque(produtoEstoque);
+            Produto produto = produtoService.salvar(produtoPedido.getProduto());
+            produtoPedido.setProduto(produto);
             produtoPedido = service.salvar(produtoPedido);
             return new ResponseEntity(produtoPedido, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
@@ -93,8 +91,8 @@ public class ProdutoPedidoController {
             produtoPedido.setId(id);
             Pedido pedido = pedidoService.salvar(produtoPedido.getPedido());
             produtoPedido.setPedido(pedido);
-            ProdutoEstoque produtoEstoque = produtoEstoqueService.salvar(produtoPedido.getProdutoEstoque());
-            produtoPedido.setProdutoEstoque(produtoEstoque);
+            Produto produto = produtoService.salvar(produtoPedido.getProduto());
+            produtoPedido.setProduto(produto);
             service.salvar(produtoPedido);
             return ResponseEntity.ok(produtoPedido);
         } catch (RegraNegocioException e) {
@@ -132,12 +130,12 @@ public class ProdutoPedidoController {
                 produtoPedido.setPedido(pedido.get());
             }
         }
-        if (dto.getIdProdutoEstoque() != null) {
-            Optional<ProdutoEstoque> produtoEstoque = produtoEstoqueService.getProdutoEstoqueById(dto.getIdProdutoEstoque());
-            if (!produtoEstoque.isPresent()) {
-                produtoPedido.setProdutoEstoque(null);
+        if (dto.getIdProduto() != null) {
+            Optional<Produto> produto = produtoService.getProdutoById(dto.getIdProduto());
+            if (!produto.isPresent()) {
+                produtoPedido.setProduto(null);
             } else {
-                produtoPedido.setProdutoEstoque(produtoEstoque.get());
+                produtoPedido.setProduto(produto.get());
             }
         }
         return produtoPedido;

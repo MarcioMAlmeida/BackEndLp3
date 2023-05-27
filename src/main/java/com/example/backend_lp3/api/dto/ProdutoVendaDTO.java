@@ -15,7 +15,7 @@ public class ProdutoVendaDTO {
 
     private Integer quantidade;
     private Long idVenda;
-    private Long idProdutoEstoque;
+    private Long idProduto;
 
     public static ProdutoVendaDTO create(ProdutoVenda produtoVenda) {
         ModelMapper modelMapper = new ModelMapper();

@@ -17,7 +17,7 @@ public class ProdutoPedido {
     private Long id;
 
     @ManyToOne
-    private ProdutoEstoque produtoEstoque;
+    private Produto produto;
 
     @ManyToOne
     private Pedido pedido;

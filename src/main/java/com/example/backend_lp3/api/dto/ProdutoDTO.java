@@ -12,9 +12,15 @@ import org.modelmapper.ModelMapper;
 public class ProdutoDTO {
 
     private Long id;
-    private String nomeProduto;
+    private String nome;
+    private Integer quantidade;
     private Integer quantidadeMin;
     private Integer quantidadeMax;
+    private Double precoUnitario;
+    private Long idDepartamento;
+    private Long idCor;
+    private Long idTamanho;
+    private Long idGenero;
 
     public static ProdutoDTO create(Produto produto) {
         ModelMapper modelMapper = new ModelMapper();
