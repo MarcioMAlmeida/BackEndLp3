@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     @Modifying
-    @Query("UPDATE produto P set P.quantidade = P.quantidade - :quantidade where P.id = :idProduto")
+    @Query(value = "UPDATE produto P set P.quantidade = P.quantidade - :quantidade where P.id = :idProduto")
     default void retirarUnidade(@Param("idProduto") Long idProduto, @Param("quantidade") Integer quantidade) {
     }
 
     @Modifying
-    @Query("UPDATE produto P set P.quantidade = P.quantidade + :quantidade where P.id = :idProduto")
+    @Query(value = "UPDATE produto P set P.quantidade = P.quantidade + :quantidade where P.id = :idProduto")
     default void adicionarUnidade(@Param("idProduto") Long idProduto, @Param("quantidade") Integer quantidade) {
     }
 }
