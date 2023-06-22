@@ -74,7 +74,7 @@ public class MetodoPagamentoController {
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id,@RequestBody MetodoPagamentoDTO dto) {
         if (!service.getMetodoPagamentoById(id).isPresent()) {
-            return new ResponseEntity("Meétodo de pagamento não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Método de pagamento não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             MetodoPagamento metodoPagamento = converter(dto);
