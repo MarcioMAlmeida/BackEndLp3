@@ -29,7 +29,7 @@ public class ClienteService {
 
     @Transactional
     public Cliente salvar(Cliente cliente) {
-        //validar(cliente);
+        validar(cliente);
         return repository.save(cliente);
     }
 
@@ -42,6 +42,15 @@ public class ClienteService {
     public void validar(Cliente cliente) {
         if (cliente.getNome() == null || cliente.getNome().trim().equals("")) {
             throw new RegraNegocioException("Nome inválido!");
+        }
+        if (cliente.getTelefone() == null || cliente.getTelefone().trim().equals("")) {
+            throw new RegraNegocioException("Telefone inválido!");
+        }
+        if (cliente.getEmail() == null || cliente.getEmail().trim().equals("")) {
+            throw new RegraNegocioException("Email inválido!");
+        }
+        if (cliente.getCpf() == null || cliente.getCpf().trim().equals("")) {
+            throw new RegraNegocioException("CPF inválido!");
         }
     }
 

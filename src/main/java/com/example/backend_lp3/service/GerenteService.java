@@ -44,5 +44,14 @@ public class GerenteService {
         if (gerente.getNome() == null || gerente.getNome().trim().equals("")) {
             throw new RegraNegocioException("Nome inválido!");
         }
+        if (gerente.getTelefone() == null || gerente.getTelefone().trim().equals("")) {
+            throw new RegraNegocioException("Telefone inválido!");
+        }
+        if (gerente.getEmail() == null || gerente.getEmail().trim().equals("")) {
+            throw new RegraNegocioException("Email inválido!");
+        }
+        if (gerente.getCpf() == null || gerente.getCpf().trim().equals("")) {
+            throw new RegraNegocioException("CPF inválido!");
+        }
     }
 }
