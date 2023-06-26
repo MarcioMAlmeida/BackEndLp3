@@ -53,8 +53,8 @@ public class GerenteService {
         if (gerente.getCpf() == null || gerente.getCpf().trim().equals("")) {
             throw new RegraNegocioException("CPF inválido!");
         }
-        if (repository.existsByCpf(gerente.getCpf()) || repository.existsByEmail(gerente.getEmail())) {
-            throw new RegraNegocioException("Gerente já cadastrado!");
-        }
+//        if (repository.existsByCpf(gerente.getCpf()) || repository.existsByEmail(gerente.getEmail())) {
+//            throw new RegraNegocioException("Gerente já cadastrado!");
+//        }
     }
 }

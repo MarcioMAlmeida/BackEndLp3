@@ -19,7 +19,7 @@ public class FornecedorDTO {
     private String email;
     private String cnpj;
     private String logradouro;
-    private Integer numero;
+    private String numero;
     private String complemento;
     private String bairro;
     private String cidade;

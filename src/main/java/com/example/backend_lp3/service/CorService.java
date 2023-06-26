@@ -46,8 +46,8 @@ public class CorService {
         if (cor.getNomeCor() == null || cor.getNomeCor().trim().equals("")) {
             throw new RegraNegocioException("Cor inválida!");
         }
-        if (repository.existsByNomeCor(cor.getNomeCor()) ) {
-            throw new RegraNegocioException("Cor já cadastrada!");
-        }
+//        if (repository.existsByNomeCor(cor.getNomeCor()) ) {
+//            throw new RegraNegocioException("Cor já cadastrada!");
+//        }
     }
 }

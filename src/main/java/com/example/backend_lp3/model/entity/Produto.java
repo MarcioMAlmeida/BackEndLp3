@@ -19,7 +19,7 @@ public class Produto {
     private String nome;
     private Integer quantidadeMin;
     private Integer quantidadeMax;
-    private Integer quantidade;
+    private Integer quantidade = 0;
     private Double precoUnitario;
 
     @OneToOne

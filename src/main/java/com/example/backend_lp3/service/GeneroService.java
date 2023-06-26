@@ -44,8 +44,8 @@ public class GeneroService {
         if (genero.getNomeGenero() == null || genero.getNomeGenero().trim().equals("")) {
             throw new RegraNegocioException("Gênero inválido!");
         }
-        if (repository.existsByNomeGenero(genero.getNomeGenero()) ) {
-            throw new RegraNegocioException("Gênero já cadastrado!");
-        }
+//        if (repository.existsByNomeGenero(genero.getNomeGenero()) ) {
+//            throw new RegraNegocioException("Gênero já cadastrado!");
+//        }
     }
 }

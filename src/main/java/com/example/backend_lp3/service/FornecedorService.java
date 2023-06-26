@@ -53,8 +53,8 @@ public class FornecedorService {
         if (fornecedor.getCnpj() == null || fornecedor.getCnpj().trim().equals("")) {
             throw new RegraNegocioException("Cnpj inválido!");
         }
-        if (repository.existsByCnpj(fornecedor.getCnpj()) || repository.existsByEmail(fornecedor.getEmail())) {
-            throw new RegraNegocioException("Fornecedor já cadastrado!");
-        }
+//        if (repository.existsByCnpj(fornecedor.getCnpj()) || repository.existsByEmail(fornecedor.getEmail())) {
+//            throw new RegraNegocioException("Fornecedor já cadastrado!");
+//        }
     }
 }

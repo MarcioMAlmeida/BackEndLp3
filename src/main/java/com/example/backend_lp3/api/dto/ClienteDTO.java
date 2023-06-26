@@ -17,7 +17,7 @@ public class ClienteDTO {
     private String email;
     private String cpf;
     private String logradouro;
-    private Integer numero;
+    private String numero;
     private String complemento;
     private String bairro;
     private String cidade;
