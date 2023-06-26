@@ -37,7 +37,7 @@ public class EnderecoService {
         if (endereco.getLogradouro() == null || endereco.getLogradouro().trim().equals("")) {
             throw new RegraNegocioException("Logradouro inválido!");
         }
-        if (endereco.getNumero() == null || endereco.getNumero().trim().equals("")) {
+        if (endereco.getNumero() == null ) {
             throw new RegraNegocioException("Número inválido!");
         }
         if (endereco.getComplemento() == null || endereco.getComplemento().trim().equals("")) {

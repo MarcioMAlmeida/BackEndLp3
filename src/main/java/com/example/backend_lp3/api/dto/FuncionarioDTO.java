@@ -18,7 +18,7 @@ public class FuncionarioDTO {
     private String email;
     private String cpf;
     private String logradouro;
-    private String numero;
+    private Integer numero;
     private String complemento;
     private String bairro;
     private String cidade;
