@@ -44,5 +44,14 @@ public class FornecedorService {
         if (fornecedor.getNome() == null || fornecedor.getNome().trim().equals("")) {
             throw new RegraNegocioException("Nome inválido!");
         }
+        if (fornecedor.getTelefone() == null || fornecedor.getTelefone().trim().equals("")) {
+            throw new RegraNegocioException("Telefone inválido!");
+        }
+        if (fornecedor.getEmail() == null || fornecedor.getEmail().trim().equals("")) {
+            throw new RegraNegocioException("Email inválido!");
+        }
+        if (fornecedor.getCnpj() == null || fornecedor.getCnpj().trim().equals("")) {
+            throw new RegraNegocioException("Cnpj inválido!");
+        }
     }
 }

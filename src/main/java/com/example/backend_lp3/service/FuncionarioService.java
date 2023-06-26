@@ -44,5 +44,14 @@ public class FuncionarioService {
         if (funcionario.getNome() == null || funcionario.getNome().trim().equals("")) {
             throw new RegraNegocioException("Nome inválido!");
         }
+        if (funcionario.getTelefone() == null || funcionario.getTelefone().trim().equals("")) {
+            throw new RegraNegocioException("Telefone inválido!");
+        }
+        if (funcionario.getEmail() == null || funcionario.getEmail().trim().equals("")) {
+            throw new RegraNegocioException("Email inválido!");
+        }
+        if (funcionario.getCpf() == null || funcionario.getCpf().trim().equals("")) {
+            throw new RegraNegocioException("CPF inválido!");
+        }
     }
 }
