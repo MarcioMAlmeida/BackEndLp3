@@ -41,8 +41,11 @@ public class PedidoService {
     }
 
     public void validar(Pedido pedido) {
-        //if (pedido.getNome() == null || pedido.getNome().trim().equals("")) {
-        //  throw new RegraNegocioException("Nome inválido!");
-        //}
+        if (pedido.getDataPedido() == null) {
+            throw new RegraNegocioException("Data do pedido inválida!");
+        }
+        if (pedido.getDataEntrega() == null) {
+            throw new RegraNegocioException("Data da entrega inválida!");
+        }
     }
 }

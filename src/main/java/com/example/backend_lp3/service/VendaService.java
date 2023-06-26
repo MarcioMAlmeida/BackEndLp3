@@ -41,8 +41,8 @@ public class VendaService {
     }
 
     public void validar(Venda venda) {
-        //if (venda.getNome() == null || venda.getNome().trim().equals("")) {
-        //   throw new RegraNegocioException("Nome inválido!");
-        //}
+        if (venda.getDataVenda() == null) {
+           throw new RegraNegocioException("Data da venda inválida!");
+        }
     }
 }

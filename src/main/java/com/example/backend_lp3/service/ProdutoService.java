@@ -44,5 +44,8 @@ public class ProdutoService {
         if (produto.getNome() == null || produto.getNome().trim().equals("")) {
             throw new RegraNegocioException("Produto inválido!");
         }
+        if (produto.getDepartamento() == null || produto.getGenero() == null || produto.getTamanho() == null ) {
+            throw new RegraNegocioException("Preencha todos os campos!");
+        }
     }
 }
