@@ -44,5 +44,8 @@ public class MetodoPagamentoService {
         if (metodoPagamento.getNomeMetodoPagamento() == null || metodoPagamento.getNomeMetodoPagamento().trim().equals("")) {
             throw new RegraNegocioException("Metodo de Pagamento inválido!");
         }
+        if (repository.existsByNomeMetodoPagamento(metodoPagamento.getNomeMetodoPagamento()) ) {
+            throw new RegraNegocioException("Metodo de Pagamento já cadastrado!");
+        }
     }
 }

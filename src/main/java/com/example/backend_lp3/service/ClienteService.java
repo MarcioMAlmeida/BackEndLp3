@@ -52,6 +52,9 @@ public class ClienteService {
         if (cliente.getCpf() == null || cliente.getCpf().trim().equals("")) {
             throw new RegraNegocioException("CPF inválido!");
         }
+        if (repository.existsByCpf(cliente.getCpf()) || repository.existsByEmail(cliente.getEmail())) {
+            throw new RegraNegocioException("Cliente já cadastrado!");
+        }
     }
 
 }

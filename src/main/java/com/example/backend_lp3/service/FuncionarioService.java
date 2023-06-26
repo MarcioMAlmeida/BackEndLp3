@@ -53,5 +53,8 @@ public class FuncionarioService {
         if (funcionario.getCpf() == null || funcionario.getCpf().trim().equals("")) {
             throw new RegraNegocioException("CPF inválido!");
         }
+        if (repository.existsByCpf(funcionario.getCpf()) || repository.existsByEmail(funcionario.getEmail())) {
+            throw new RegraNegocioException("Funcionário já cadastrado!");
+        }
     }
 }

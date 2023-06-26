@@ -44,5 +44,8 @@ public class DepartamentoService {
         if (departamento.getNomeDepartamento() == null || departamento.getNomeDepartamento().trim().equals("")) {
             throw new RegraNegocioException("Departamento inválido!");
         }
+        if (repository.existsByNomeDepartamento(departamento.getNomeDepartamento()) ) {
+            throw new RegraNegocioException("Departamento já cadastrado!");
+        }
     }
 }

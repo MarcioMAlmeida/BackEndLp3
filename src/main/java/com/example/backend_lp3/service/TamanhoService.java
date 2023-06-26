@@ -44,5 +44,8 @@ public class TamanhoService {
         if (tamanho.getNomeTamanho() == null || tamanho.getNomeTamanho().trim().equals("")) {
             throw new RegraNegocioException("Tamanho inválido!");
         }
+        if (repository.existsByNomeTamanho(tamanho.getNomeTamanho()) ) {
+            throw new RegraNegocioException("Tamanho já cadastrado!");
+        }
     }
 }
