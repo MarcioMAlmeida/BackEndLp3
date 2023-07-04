@@ -1,7 +1,7 @@
 package com.example.backend_lp3.service;
 
 import com.example.backend_lp3.exception.RegraNegocioException;
-import com.example.backend_lp3.model.entity.ProdutoVenda;
+import com.example.backend_lp3.model.entity.Produto;
 import com.example.backend_lp3.model.entity.ProdutoVenda;
 import com.example.backend_lp3.model.repository.ProdutoRepository;
 import com.example.backend_lp3.model.repository.ProdutoVendaRepository;
@@ -52,15 +52,18 @@ public class ProdutoVendaService {
         if(unidadesDisponiveis < 0) {
             throw new RegraNegocioException("Quantidade de "+ produtoVenda.getProduto().getNome() +" insuficiente!");
         }
-        produtoRepository.retirarUnidade(produtoVenda.getProduto().getId(), produtoVenda.getQuantidade());
-        vendaRepository.atualizarPreco(produtoVenda.getVenda().getId(), (produtoVenda.getProduto().getPrecoUnitario() * produtoVenda.getQuantidade()));
+        Produto produto = produtoVenda.getProduto();
+        repository.save(produtoVenda); // Salva o produtoVenda no repositório primeiro
 
-        return repository.save(produtoVenda);
+        produtoRepository.retirarUnidade(produto.getId(), produtoVenda.getQuantidade()); // Subtrai a quantidade do produto
+
+        return produtoVenda;
     }
 
     @Transactional
     public void excluir(ProdutoVenda produtoVenda) {
         Objects.requireNonNull(produtoVenda.getId());
+        produtoRepository.adicionarUnidade(produtoVenda.getProduto().getId(), produtoVenda.getQuantidade());
         repository.delete(produtoVenda);
     }
 

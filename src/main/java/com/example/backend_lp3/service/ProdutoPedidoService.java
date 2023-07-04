@@ -2,6 +2,7 @@ package com.example.backend_lp3.service;
 
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.ProdutoPedido;
+import com.example.backend_lp3.model.entity.Produto;
 import com.example.backend_lp3.model.repository.PedidoRepository;
 import com.example.backend_lp3.model.repository.ProdutoPedidoRepository;
 import com.example.backend_lp3.model.repository.ProdutoRepository;
@@ -52,13 +53,19 @@ public class ProdutoPedidoService {
         if(produtoPedido.getProduto().getQuantidadeMin() > produtoPedido.getQuantidade()) {
             throw new RegraNegocioException("Quantidade de "+ produtoPedido.getProduto().getNome() +" insuficiente!");
         }
-        produtoRepository.adicionarUnidade(produtoPedido.getProduto().getId(), produtoPedido.getQuantidade());
-        return repository.save(produtoPedido);
+
+        Produto produto = produtoPedido.getProduto();
+        repository.save(produtoPedido); // Salva o produtoPedido no repositório primeiro
+
+        produtoRepository.adicionarUnidade(produto.getId(), produtoPedido.getQuantidade()); // Adiciona a quantidade do produto
+
+        return produtoPedido;
     }
 
     @Transactional
     public void excluir(ProdutoPedido produtoPedido) {
         Objects.requireNonNull(produtoPedido.getId());
+        produtoRepository.retirarUnidade(produtoPedido.getProduto().getId(), produtoPedido.getQuantidade());
         repository.delete(produtoPedido);
     }
 
