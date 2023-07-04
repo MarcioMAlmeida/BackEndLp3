@@ -5,9 +5,9 @@ import com.example.backend_lp3.model.entity.ProdutoPedido;
 import com.example.backend_lp3.model.repository.PedidoRepository;
 import com.example.backend_lp3.model.repository.ProdutoPedidoRepository;
 import com.example.backend_lp3.model.repository.ProdutoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -19,6 +19,7 @@ public class ProdutoPedidoService {
     private ProdutoRepository produtoRepository;
     private PedidoRepository pedidoRepository;
 
+    @Autowired
     public ProdutoPedidoService(ProdutoPedidoRepository repository, ProdutoRepository produtoRepository, PedidoRepository pedidoRepository) {
         this.repository = repository;
         this.produtoRepository = produtoRepository;
@@ -31,6 +32,10 @@ public class ProdutoPedidoService {
 
     public Optional<ProdutoPedido> getProdutoPedidoById(Long id) {
         return repository.findById(id);
+    }
+
+    public List<ProdutoPedido> getProdutosPedidoByPedidoId(Long idPedido) {
+        return repository.findByPedidoId(idPedido);
     }
 
     @Transactional

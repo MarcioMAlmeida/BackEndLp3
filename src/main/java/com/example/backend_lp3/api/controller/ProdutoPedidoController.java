@@ -56,6 +56,15 @@ public class ProdutoPedidoController {
         return ResponseEntity.ok(produtoPedido.map(ProdutoPedidoDTO::create));
     }
 
+    @GetMapping("/pedidos/{idPedido}")
+    public ResponseEntity<?> getProdutosPedidoByPedidoId(@PathVariable("idPedido") Long idPedido) {
+        try {
+            return ResponseEntity.ok(service.getProdutosPedidoByPedidoId(idPedido));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Erro ao carregar Produtos do Pedido");
+        }
+    }
+
     @PostMapping()
     @ApiOperation("Salvar uma nova ProdutoPedido")
     @ApiResponses({

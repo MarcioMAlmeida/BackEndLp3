@@ -2,9 +2,11 @@ package com.example.backend_lp3.service;
 
 import com.example.backend_lp3.exception.RegraNegocioException;
 import com.example.backend_lp3.model.entity.ProdutoVenda;
+import com.example.backend_lp3.model.entity.ProdutoVenda;
 import com.example.backend_lp3.model.repository.ProdutoRepository;
 import com.example.backend_lp3.model.repository.ProdutoVendaRepository;
 import com.example.backend_lp3.model.repository.VendaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ public class ProdutoVendaService {
     private VendaRepository vendaRepository;
     private ProdutoRepository produtoRepository;
 
+    @Autowired
     public ProdutoVendaService(ProdutoVendaRepository repository, VendaRepository vendaRepository, ProdutoRepository produtoRepository) {
         this.repository = repository;
         this.vendaRepository = vendaRepository;
@@ -31,6 +34,10 @@ public class ProdutoVendaService {
 
     public Optional<ProdutoVenda> getProdutoVendaById(Long id) {
         return repository.findById(id);
+    }
+
+    public List<ProdutoVenda> getProdutosVendaByVendaId(Long idVenda) {
+        return repository.findByVendaId(idVenda);
     }
 
     @Transactional

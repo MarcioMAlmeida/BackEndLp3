@@ -7,6 +7,7 @@ import com.example.backend_lp3.model.entity.Usuario;
 import com.example.backend_lp3.security.JwtService;
 import com.example.backend_lp3.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,8 +21,10 @@ import org.springframework.web.server.ResponseStatusException;
 @CrossOrigin
 public class UsuarioController {
 
+    @Autowired
     private final UsuarioService usuarioService;
     private final PasswordEncoder passwordEncoder;
+    @Autowired
     private final JwtService jwtService;
 
     @PostMapping
