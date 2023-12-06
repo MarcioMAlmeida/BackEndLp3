@@ -21,4 +21,19 @@ public class MetodoPagamento {
     private Long id;
 
     private String nomeMetodoPagamento;
+    private int parcelas;
+
+    public double calcularJuros() {
+        double taxaJuros = 0.0;
+
+        if(nomeMetodoPagamento.equals("Dinheiro")) {
+            taxaJuros = 0.0;
+        } else if (nomeMetodoPagamento.equals("Cartão de Crédito")) {
+            taxaJuros = 0.05;
+        } else if (nomeMetodoPagamento.equals("Cartão de Débito")) {
+            taxaJuros = 0.03;
+        }
+
+        return taxaJuros * parcelas;
+    }
 }

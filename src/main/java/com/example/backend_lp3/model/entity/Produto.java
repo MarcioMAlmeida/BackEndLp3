@@ -24,10 +24,10 @@ public class Produto {
 
     public double calcularDesconto() {
 
-        double percentualPromocao = 0.0;
-        double percentualQuantidade = quantidade / quantidadeMax;
+        double percentualPromocao;
+        double percentualQuantidade = (double) quantidade / quantidadeMax;
 
-        if(percentualQuantidade >= 0 && percentualQuantidade <= 0.1){
+        if(percentualQuantidade <= 0.1){
             percentualPromocao = 0.0;
         } else if (percentualQuantidade <= 0.2) {
             percentualPromocao = 0.6;
@@ -45,14 +45,11 @@ public class Produto {
             percentualPromocao = 0.24;
         }else if (percentualQuantidade <= 0.9) {
             percentualPromocao = 0.27;
-        }else if (percentualQuantidade == 1) {
+        }else {
             percentualPromocao = 0.30;
         }
 
-        // Calcula o valor do desconto
-        double desconto = percentualPromocao * precoUnitario;
-
-        return desconto;
+        return percentualPromocao * precoUnitario;
     }
 
     public double calcularDescontoPorGenereo() {
@@ -66,7 +63,6 @@ public class Produto {
                 percentualPromocao = 0.05;
             }
 
-            // Calcula o valor do desconto
             double desconto = percentualPromocao * precoUnitario;
 
             return desconto;

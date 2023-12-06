@@ -26,4 +26,5 @@ public class Pedido {
     private Fornecedor fornecedor;
     @ManyToOne
     private Gerente gerente;
+
 }
