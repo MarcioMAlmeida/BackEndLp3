@@ -1,70 +1,183 @@
 package com.example.backend_lp3.model.entity;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ProdutoTest {
 
-    @Test
-    public void deveCalcularPromocaoDe30PorcentoSeQuantidadeForIgualAQuantidadeMaxima() {
-        Produto produto = new Produto();
-        produto.setPrecoUnitario(100.0);
-        produto.setQuantidade(100);
+    private Produto produto;
+    private Genero generoMock;
+
+    @BeforeEach
+    public void setUp() {
+        produto = new Produto();
         produto.setQuantidadeMax(100);
-
-        double desconto = produto.calcularDesconto();
-
-        assertEquals(30.0, desconto);
+        produto.setPrecoUnitario(100.0);
+        generoMock = mock(Genero.class);
+        produto.setGenero(generoMock);
     }
 
     @Test
-    public void deveCalcularPromocaoDe10PorcentoSeQuantidadeForIgualAQuantidadeMinima() {
-        Produto produto = new Produto();
-        produto.setPrecoUnitario(100.0);
+    public void testaPercentual0() {
+        produto.setQuantidade(0);
+        assertEquals(0.0, produto.calcularDesconto());
+    }
+
+    @Test
+    public void testaPercentualInferiorA10() {
         produto.setQuantidade(10);
-        produto.setQuantidadeMax(100);
-
-        double desconto = produto.calcularDesconto();
-
-        assertEquals(0.0, desconto);
-    }
-
-    @Mock
-    private Genero genero;
-
-    @Test
-    public void deveCalcularDescontoDe10PorcentoParaProdutosMasculinos() {
-        Produto produto = new Produto();
-        produto.setGenero(genero);
-        Mockito.when(genero.getNomeGenero()).thenReturn("Masculino");
-
-        double desconto = produto.calcularDescontoPorGenereo();
-
-        assertEquals(10.0, desconto, 0.001);
+        assertEquals(0.0, produto.calcularDesconto());
     }
 
     @Test
-    public void deveCalcularDescontoDe15PorcentoParaProdutosFemininos() {
-        Produto produto = new Produto();
-        produto.setGenero(genero);
-        Mockito.when(genero.getNomeGenero()).thenReturn("Feminino");
-
-        double desconto = produto.calcularDescontoPorGenereo();
-
-        assertEquals(15.0, desconto, 0.001);
+    public void testaPercentualInferiorA20() {
+        produto.setQuantidade(20);
+        assertEquals(6.0, produto.calcularDesconto());
     }
 
     @Test
-    public void deveCalcularDescontoDe5PorcentoParaProdutosUnissex() {
-        Produto produto = new Produto();
+    public void testaPercentualInferiorA30() {
+        produto.setQuantidade(30);
+        assertEquals(9.0, produto.calcularDesconto());
+    }
+
+    @Test
+    public void testaPercentualInferiorA40() {
+        produto.setQuantidade(40);
+        assertEquals(12.0, produto.calcularDesconto());
+    }
+
+    @Test
+    public void testaPercentualInferiorA50() {
+        produto.setQuantidade(50);
+        assertEquals(15.0, produto.calcularDesconto());
+    }
+
+    @Test
+    public void testaPercentualInferiorA60() {
+        produto.setQuantidade(60);
+        assertEquals(18.0, produto.calcularDesconto());
+    }
+
+    @Test
+    public void testaPercentualInferiorA70() {
+        produto.setQuantidade(70);
+        assertEquals(21.0, produto.calcularDesconto());
+    }
+
+    @Test
+    public void testaPercentualInferiorA80() {
+        produto.setQuantidade(80);
+        assertEquals(24.0, produto.calcularDesconto());
+    }
+
+    @Test
+    public void testaPercentualInferiorA90() {
+        produto.setQuantidade(90);
+        assertEquals(27.0, produto.calcularDesconto());
+    }
+
+    @Test
+    public void testaPercentualInferiorA100() {
+        produto.setQuantidade(100);
+        assertEquals(30.0, produto.calcularDesconto());
+    }
+
+
+    @Test
+    public void testDescontoGeneroMasculino() {
+        when(generoMock.getNomeGenero()).thenReturn("Masculino");
+        assertEquals(10.0, produto.calcularDescontoPorGenero());
+    }
+
+    @Test
+    public void testDescontoGeneroFeminino() {
+        when(generoMock.getNomeGenero()).thenReturn("Feminino");
+        assertEquals(15.0, produto.calcularDescontoPorGenero());
+    }
+
+    @Test
+    public void testDescontoGeneroUnissex() {
+        when(generoMock.getNomeGenero()).thenReturn("Unissex");
+        assertEquals(5.0, produto.calcularDescontoPorGenero());
+    }
+
+    @Test
+    public void testDescontoGeneroDesconhecido() {
+        when(generoMock.getNomeGenero()).thenReturn("Desconhecido");
+        assertEquals(0.0, produto.calcularDescontoPorGenero());
+    }
+
+    @Test
+    public void testId() {
+        Long id = 1L;
+        produto.setId(id);
+        assertEquals(id, produto.getId());
+    }
+
+    @Test
+    public void testNome() {
+        String nome = "Produto Teste";
+        produto.setNome(nome);
+        assertEquals(nome, produto.getNome());
+    }
+
+    @Test
+    public void testQuantidadeMin() {
+        Integer quantidadeMin = 5;
+        produto.setQuantidadeMin(quantidadeMin);
+        assertEquals(quantidadeMin, produto.getQuantidadeMin());
+    }
+
+    @Test
+    public void testQuantidadeMax() {
+        Integer quantidadeMax = 100;
+        produto.setQuantidadeMax(quantidadeMax);
+        assertEquals(quantidadeMax, produto.getQuantidadeMax());
+    }
+
+    @Test
+    public void testQuantidade() {
+        Integer quantidade = 10;
+        produto.setQuantidade(quantidade);
+        assertEquals(quantidade, produto.getQuantidade());
+    }
+
+    @Test
+    public void testPrecoUnitario() {
+        Double precoUnitario = 25.50;
+        produto.setPrecoUnitario(precoUnitario);
+        assertEquals(precoUnitario, produto.getPrecoUnitario(), 0.001);
+    }
+
+    @Test
+    public void testDepartamento() {
+        Departamento departamento = new Departamento();
+        produto.setDepartamento(departamento);
+        assertEquals(departamento, produto.getDepartamento());
+    }
+
+    @Test
+    public void testCor() {
+        Cor cor = new Cor();
+        produto.setCor(cor);
+        assertEquals(cor, produto.getCor());
+    }
+
+    @Test
+    public void testTamanho() {
+        Tamanho tamanho = new Tamanho();
+        produto.setTamanho(tamanho);
+        assertEquals(tamanho, produto.getTamanho());
+    }
+
+    @Test
+    public void testGenero() {
+        Genero genero = new Genero();
         produto.setGenero(genero);
-        Mockito.when(genero.getNomeGenero()).thenReturn("Unissex");
-
-        double desconto = produto.calcularDescontoPorGenereo();
-
-        assertEquals(5.0, desconto, 0.001);
+        assertEquals(genero, produto.getGenero());
     }
 }

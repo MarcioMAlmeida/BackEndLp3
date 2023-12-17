@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class Produto {
 
     @Id
@@ -30,9 +30,9 @@ public class Produto {
         if(percentualQuantidade <= 0.1){
             percentualPromocao = 0.0;
         } else if (percentualQuantidade <= 0.2) {
-            percentualPromocao = 0.6;
+            percentualPromocao = 0.06;
         }else if (percentualQuantidade <= 0.3) {
-            percentualPromocao = 0.9;
+            percentualPromocao = 0.09;
         }else if (percentualQuantidade <= 0.4) {
             percentualPromocao = 0.12;
         }else if (percentualQuantidade <= 0.5) {
@@ -52,7 +52,7 @@ public class Produto {
         return percentualPromocao * precoUnitario;
     }
 
-    public double calcularDescontoPorGenereo() {
+    public double calcularDescontoPorGenero() {
             double percentualPromocao = 0.0;
 
             if(genero.getNomeGenero().equals("Masculino")){
